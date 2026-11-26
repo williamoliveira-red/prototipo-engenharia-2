@@ -1,0 +1,4560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="showroom">
+  <title>músicaEAD — Escola de Música Online ao Vivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Showroom) */
+      --background: #fbfbfd;
+      --surface-container-low: #f5f5f7;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+
+      /* Ink */
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+
+      /* Rules */
+      --outline: #d2d2d7;
+      --outline-variant: #e5e5ea;
+
+      /* Accents */
+      --primary: #006bd6;
+      --primary-hover: #0058b0;
+      --on-primary: #ffffff;
+      --primary-container: #e8f1fd;
+      --on-primary-container: #0058b0;
+      --secondary: #bf4800;
+      --tertiary: #1d1d1f;
+      --error: #d70015;
+      --error-container: #fdeaea;
+      --on-error: #ffffff;
+
+      /* Semantic */
+      --positive: #248a3d;
+      --positive-container: #e8f5ec;
+      --warning: #b25000;
+      --warning-container: #fdf1e6;
+      --focus: #006bd6;
+
+      /* Data series */
+      --data-1: #006bd6;
+      --data-2: #bf4800;
+      --data-3: #248a3d;
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      /* Fonts */
+      --font-headline: 'Inter Tight', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-label: 'Inter', sans-serif;
+
+      /* Shape */
+      --rounded: 9999px;
+      --rounded-md: 0.75rem;
+      --rounded-lg: 1.25rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --headline-tracking: -0.035em;
+      --section-tracking: -0.02em;
+      --figure-tracking: -0.03em;
+      --tile-shadow-hover: 0 8px 28px rgb(0 0 0 / 0.08);
+      --focus-ring: 0 0 0 3px color-mix(in srgb, var(--focus) 28%, transparent);
+      --chevron: " \203A";
+
+      /* Type scale */
+      --display-size: clamp(2.125rem, 1.5rem + 2.5vw, 3.5rem);
+      --headline-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    img, svg { display: block; max-width: 100%; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Layout shell */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: var(--space-lg);
+    }
+
+    /* Header & Navigation */
+    .site-header {
+      background: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      min-height: 4.5rem;
+      flex-wrap: wrap;
+      padding-block: var(--space-sm);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      padding: var(--space-xs) 0;
+      cursor: pointer;
+      color: var(--on-surface);
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 2rem;
+      height: 2rem;
+      border-radius: var(--rounded-md);
+      background: var(--on-surface);
+      color: var(--background);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: var(--section-tracking);
+    }
+    .brand-name span {
+      color: var(--primary);
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      background: transparent;
+      border: 0;
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      min-height: 44px;
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .nav-btn:hover {
+      color: var(--on-surface);
+      background: var(--surface-container-low);
+    }
+    .nav-btn.active {
+      color: var(--on-surface);
+      background: var(--surface-container);
+    }
+
+    .auth-cluster {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    /* Demo Role Bar */
+    .role-bar {
+      background: var(--surface-container-low);
+      border-bottom: 1px solid var(--outline-variant);
+      padding-block: var(--space-sm);
+    }
+    .role-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .role-bar-label {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .segmented {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface-container);
+      padding: var(--space-xs);
+      border-radius: var(--rounded);
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .seg-btn {
+      background: transparent;
+      border: 0;
+      border-radius: var(--rounded);
+      padding: var(--space-xs) var(--space-md);
+      min-height: 36px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .seg-btn:hover {
+      color: var(--on-surface);
+    }
+    .seg-btn.active {
+      background: var(--background);
+      color: var(--on-surface);
+    }
+
+    /* Buttons & Links (Showroom) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      border-radius: var(--rounded);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-label);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      line-height: 1.1;
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), opacity var(--dur-micro) var(--ease-out);
+    }
+    .btn-sm {
+      min-height: 38px;
+      padding: var(--space-xs) var(--space-md);
+      font-size: 0.875rem;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--surface-container-high);
+    }
+    .btn-dark {
+      background: var(--tertiary);
+      color: var(--background);
+    }
+    .btn-dark:hover:not(:disabled) {
+      opacity: 0.88;
+    }
+    .btn-danger {
+      background: var(--error-container);
+      color: var(--error);
+    }
+    .btn-danger:hover:not(:disabled) {
+      background: var(--error);
+      color: var(--on-error);
+    }
+    .btn:disabled {
+      opacity: 0.48;
+      cursor: not-allowed;
+    }
+
+    .link-more {
+      background: transparent;
+      border: 0;
+      padding: var(--space-xs) var(--space-sm);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--primary);
+      font-family: var(--font-label);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .link-more:hover {
+      text-decoration: underline;
+    }
+    .link-more.with-chevron::after {
+      content: var(--chevron);
+    }
+
+    /* Chips & Badges */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border-radius: var(--rounded);
+      padding: var(--space-xs) var(--space-md);
+      font-size: var(--label-size);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    .chip-blue {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .chip-green {
+      background: var(--positive-container);
+      color: var(--positive);
+    }
+    .chip-warning {
+      background: var(--warning-container);
+      color: var(--warning);
+    }
+    .chip-danger {
+      background: var(--error-container);
+      color: var(--error);
+    }
+    .chip-neutral {
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    /* Typography & Showroom Treatments */
+    .eyebrow {
+      color: var(--secondary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin: 0 0 var(--space-sm);
+    }
+    .headline-stack {
+      text-align: center;
+      padding-block: var(--space-2xl) var(--space-xl);
+    }
+    .headline-stack.compact {
+      padding-block: var(--space-xl) var(--space-lg);
+    }
+    .headline-stack h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.05;
+      color: var(--on-surface);
+      margin: 0 auto;
+      max-width: 18ch;
+    }
+    .headline-stack h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      letter-spacing: var(--section-tracking);
+      line-height: 1.1;
+      color: var(--on-surface);
+      margin: 0 auto;
+      max-width: 24ch;
+    }
+    .headline-stack .lede {
+      color: var(--on-surface-variant);
+      font-size: var(--subhead-size);
+      line-height: 1.5;
+      max-width: 54ch;
+      margin: var(--space-md) auto 0;
+    }
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    h2.section-title {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      letter-spacing: var(--section-tracking);
+      line-height: 1.12;
+      margin: 0 0 var(--space-xs);
+    }
+    h3.tile-title {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 0;
+    }
+    .muted {
+      color: var(--on-surface-variant);
+    }
+
+    /* Bands & Tiles (Showroom Treatment #2 & #4) */
+    .band {
+      padding-block: var(--space-2xl);
+    }
+    .band.compact {
+      padding-block: var(--space-xl);
+    }
+    .band.alt {
+      background: var(--surface-container-low);
+    }
+    .tile {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl) var(--space-lg);
+      border: 0;
+      min-width: 0;
+    }
+    .band.alt .tile {
+      background: var(--background);
+    }
+    .tile-inset {
+      background: var(--background);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .tile-clickable {
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .tile-clickable:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--tile-shadow-hover);
+    }
+
+    .tile.figure {
+      text-align: center;
+      padding: var(--space-lg);
+    }
+    .tile.figure .label {
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+    }
+    .tile.figure .value {
+      font-family: var(--font-headline);
+      font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: var(--figure-tracking);
+      line-height: 1.1;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+    }
+    .tile.figure .caption {
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-top: var(--space-xs);
+    }
+
+    /* Grids */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .card-grid-dense {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .bento-plan {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .studio-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .card-wrapper {
+      container-type: inline-size;
+    }
+    .card-inner-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    @container (max-width: 399px) {
+      .card-inner-split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* Forms & Inputs (always-visible labels above inputs) */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+    .field.full {
+      grid-column: 1 / -1;
+    }
+    .field label {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface);
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: var(--background);
+      color: var(--on-surface);
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      padding: 0.6875rem var(--space-md);
+      font-size: 0.9375rem;
+      line-height: 1.4;
+      min-height: 44px;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .field select {
+      padding-right: var(--space-xl);
+    }
+    .field textarea {
+      border-radius: var(--rounded-md);
+      min-height: 104px;
+      resize: vertical;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: var(--focus-ring);
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+    .checkbox-row label {
+      font-size: 0.875rem;
+      color: var(--on-surface);
+      cursor: pointer;
+    }
+
+    /* Feedback banners */
+    .notice {
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .notice-blue {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .notice-warning {
+      background: var(--warning-container);
+      color: var(--warning);
+    }
+    .notice-danger {
+      background: var(--error-container);
+      color: var(--error);
+    }
+    .notice-green {
+      background: var(--positive-container);
+      color: var(--positive);
+    }
+
+    /* Progress bar (vacancy / audio level / progress) */
+    .meter-track {
+      width: 100%;
+      height: 8px;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%;
+      border-radius: var(--rounded);
+      background: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+    .meter-fill.warn {
+      background: var(--secondary);
+    }
+    .meter-fill.full {
+      background: var(--on-surface-variant);
+    }
+    .meter-fill.good {
+      background: var(--positive);
+    }
+
+    /* Tables (Showroom: no vertical lines, hairlines between rows) */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-variant-numeric: tabular-nums;
+    }
+    th {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      white-space: nowrap;
+    }
+    td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      font-size: 0.9375rem;
+      vertical-align: middle;
+    }
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    /* Sub-tabs inside dashboards */
+    .subtabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      background: var(--surface-container);
+      padding: var(--space-xs);
+      border-radius: var(--rounded);
+      margin-bottom: var(--space-lg);
+    }
+    .subtab-btn {
+      background: transparent;
+      border: 0;
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      min-height: 40px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .subtab-btn:hover {
+      color: var(--on-surface);
+    }
+    .subtab-btn.active {
+      background: var(--background);
+      color: var(--on-surface);
+    }
+
+    /* Live / VOD Stage */
+    .stage-box {
+      background: var(--tertiary);
+      color: var(--background);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+    .stage-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .stage-visual {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-block: var(--space-lg);
+      text-align: center;
+      gap: var(--space-md);
+    }
+    .stage-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      padding-top: var(--space-md);
+      border-top: 1px solid color-mix(in srgb, var(--background) 18%, transparent);
+    }
+    .stage-btn {
+      background: color-mix(in srgb, var(--background) 14%, transparent);
+      color: var(--background);
+      border: 0;
+      border-radius: var(--rounded);
+      min-height: 40px;
+      padding: var(--space-xs) var(--space-md);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .stage-btn:hover {
+      background: color-mix(in srgb, var(--background) 24%, transparent);
+    }
+    .stage-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .stage-btn.danger {
+      background: var(--error);
+      color: var(--on-error);
+    }
+
+    .wave-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 40px;
+    }
+    .wave-bar {
+      width: 5px;
+      border-radius: var(--rounded);
+      background: var(--primary);
+      height: 12px;
+      transition: height var(--dur-micro) var(--ease-out);
+    }
+
+    /* Chat */
+    .chat-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: var(--space-xs);
+    }
+    .chat-msg {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .chat-msg-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xs);
+    }
+    .chat-msg-author {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .chat-msg-time {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Spacing utilities */
+    .stack-xs { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .stack-sm { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .stack-md { display: flex; flex-direction: column; gap: var(--space-md); }
+    .stack-lg { display: flex; flex-direction: column; gap: var(--space-lg); }
+    .row-wrap { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; }
+
+    /* Toast */
+    .toast-region {
+      position: fixed;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-width: 380px;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--tertiary);
+      color: var(--background);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      font-size: 0.875rem;
+      font-weight: 500;
+      box-shadow: var(--tile-shadow-hover);
+      pointer-events: auto;
+      animation: fadeRise var(--dur-short) var(--ease-out);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--outline-variant);
+      padding-block: var(--space-xl);
+      margin-top: var(--space-2xl);
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+    }
+
+    .hidden { display: none !important; }
+
+    @keyframes fadeRise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      animation: fadeRise var(--dur-long) var(--ease-out);
+    }
+
+    @media (max-width: 860px) {
+      .bento-plan,
+      .two-col,
+      .studio-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: var(--space-md);
+      }
+      .tile {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .header-inner {
+        padding-block: var(--space-sm);
+      }
+      .toast-region {
+        left: var(--space-md);
+        right: var(--space-md);
+        max-width: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <button type="button" class="brand" onclick="navigateTo('landing')" aria-label="Ir para a página inicial da músicaEAD">
+        <span class="brand-mark" aria-hidden="true">
+          <i data-lucide="music" style="width:18px;height:18px;"></i>
+        </span>
+        <span class="brand-name">música<span>EAD</span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <button type="button" class="nav-btn" data-nav="landing" onclick="navigateTo('landing')">Início</button>
+        <button type="button" class="nav-btn" data-nav="catalog" onclick="navigateTo('catalog')">Cursos</button>
+        <button type="button" class="nav-btn" data-nav="tutor-apply" onclick="openAuthTab('apply')">Trabalhe Conosco</button>
+        <button type="button" class="nav-btn hidden" id="nav-workspace-btn" data-nav="workspace" onclick="navigateToWorkspace()">Meu Painel</button>
+      </nav>
+
+      <div class="auth-cluster" id="header-auth-cluster"></div>
+    </div>
+  </header>
+
+  <!-- Quick Role Switcher for Prototype Exploration -->
+  <div class="role-bar">
+    <div class="container role-bar-inner">
+      <span class="role-bar-label">
+        <i data-lucide="users" style="width:14px;height:14px;" aria-hidden="true"></i>
+        Alternar perfil de acesso:
+      </span>
+      <div class="segmented" role="group" aria-label="Perfis de acesso rápido">
+        <button type="button" class="seg-btn" id="role-btn-guest" onclick="switchDemoRole('guest')">Visitante</button>
+        <button type="button" class="seg-btn" id="role-btn-student-paid" onclick="switchDemoRole('student-paid')">Aluno (Assinatura Ativa)</button>
+        <button type="button" class="seg-btn" id="role-btn-student-unpaid" onclick="switchDemoRole('student-unpaid')">Aluno (Pagamento Pendente)</button>
+        <button type="button" class="seg-btn" id="role-btn-teacher" onclick="switchDemoRole('teacher')">Professor / Tutor</button>
+        <button type="button" class="seg-btn" id="role-btn-admin" onclick="switchDemoRole('admin')">Administrador</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main id="app-main">
+
+    <!-- ==================== 1. LANDING PAGE ==================== -->
+    <section id="view-landing" class="reveal">
+      <div class="container">
+        <div class="headline-stack">
+          <p class="eyebrow">Ensino musical online ao vivo e sob demanda</p>
+          <h1>Sua escola de música em qualquer lugar.</h1>
+          <p class="lede">Aprenda Violão, Teclado e Bateria em turmas práticas reduzidas com professores validados, acervo gravado 24 horas e feedback individual em cada exercício.</p>
+          <div class="cta-row">
+            <button type="button" class="btn btn-primary" onclick="startSubscriptionFlow()">Começar por R$ 149/mês</button>
+            <button type="button" class="link-more with-chevron" onclick="navigateTo('catalog')">Explorar turmas abertas</button>
+            <button type="button" class="link-more with-chevron" onclick="openAuthTab('apply')">Tutor? Trabalhe Conosco.</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="band alt">
+        <div class="container stack-lg">
+          <div class="bento-plan">
+            <div class="tile stack-md">
+              <div class="row-between">
+                <span class="chip chip-blue">Assinatura única</span>
+                <span class="muted" style="font-size:0.875rem;font-weight:500;">Acesso imediato após confirmação</span>
+              </div>
+              <div>
+                <h2 class="section-title" style="margin-bottom:var(--space-xs);">R$ 149<span class="muted" style="font-size:1.125rem;font-weight:500;"> / mês</span></h2>
+                <p class="muted" style="margin:0;max-width:48ch;">Uma única mensalidade libera acesso ilimitado a todos os cursos de Violão, Teclado e Bateria, salas ao vivo e acervo completo de gravações.</p>
+              </div>
+              <div class="card-grid-dense" style="margin-top:var(--space-xs);">
+                <div class="row-wrap"><i data-lucide="check-circle-2" style="width:18px;height:18px;color:var(--positive);" aria-hidden="true"></i><span>3 aulas ao vivo por semana</span></div>
+                <div class="row-wrap"><i data-lucide="check-circle-2" style="width:18px;height:18px;color:var(--positive);" aria-hidden="true"></i><span>Gravações VOD liberadas 24/7</span></div>
+                <div class="row-wrap"><i data-lucide="check-circle-2" style="width:18px;height:18px;color:var(--positive);" aria-hidden="true"></i><span>Partituras, PDFs e play-alongs</span></div>
+                <div class="row-wrap"><i data-lucide="check-circle-2" style="width:18px;height:18px;color:var(--positive);" aria-hidden="true"></i><span>Correção de tarefas com nota</span></div>
+              </div>
+              <div class="row-wrap" style="margin-top:var(--space-sm);">
+                <button type="button" class="btn btn-primary" onclick="startSubscriptionFlow()">Assinar e escolher turma</button>
+                <button type="button" class="btn btn-secondary" onclick="openAuthTab('signup')">Crie sua conta</button>
+              </div>
+            </div>
+
+            <div class="stack-md">
+              <div class="tile figure">
+                <div class="label">Turmas práticas</div>
+                <div class="value">Até 10</div>
+                <div class="caption">alunos por turma para atenção individual</div>
+              </div>
+              <div class="two-col" style="gap:var(--space-md);">
+                <div class="tile figure">
+                  <div class="label">Acervo VOD</div>
+                  <div class="value">24/7</div>
+                  <div class="caption">revisão contínua</div>
+                </div>
+                <div class="tile figure">
+                  <div class="label">Turnos</div>
+                  <div class="value">3</div>
+                  <div class="caption">manhã, tarde e noite</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="container stack-lg">
+          <div class="headline-stack compact" style="padding-top:0;">
+            <h2>Trilhas por instrumento e nível</h2>
+            <p class="lede">Escolha sua turma de acordo com seu momento musical e horário disponível. Vagas atualizadas em tempo real.</p>
+          </div>
+          <div class="card-grid" id="landing-instruments-grid"></div>
+        </div>
+      </div>
+
+      <div class="band alt">
+        <div class="container">
+          <div class="tile card-inner-split">
+            <div class="stack-sm">
+              <p class="eyebrow" style="margin:0;">Para professores e músicos educadores</p>
+              <h2 class="section-title">Ensine música ao vivo para alunos de todo o Brasil.</h2>
+              <p class="muted" style="margin:0;max-width:58ch;">Envie sua formação e portfólio para avaliação da nossa coordenação pedagógica. Tutores aprovados criam rascunhos de turmas, ministram aulas pelo navegador e acompanham tarefas em um painel dedicado.</p>
+            </div>
+            <div class="row-wrap">
+              <button type="button" class="btn btn-dark" onclick="openAuthTab('apply')">Tutor? Trabalhe Conosco.</button>
+              <button type="button" class="btn btn-secondary" onclick="openAuthTab('teacher-login')">Login do Tutor/Professor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. CATÁLOGO DE CURSOS ==================== -->
+    <section id="view-catalog" class="hidden reveal">
+      <div class="container band compact">
+        <div class="headline-stack compact" style="padding-top:0;">
+          <p class="eyebrow">Vagas atualizadas em tempo real</p>
+          <h2>Catálogo de Cursos e Turmas</h2>
+          <p class="lede">Filtre por instrumento, nível e período. Todas as turmas estão incluídas na assinatura única de R$ 149/mês.</p>
+        </div>
+
+        <div id="catalog-status-banner" class="hidden" style="margin-bottom:var(--space-lg);"></div>
+
+        <div class="tile" style="margin-bottom:var(--space-lg);">
+          <div class="form-grid">
+            <div class="field">
+              <label for="filter-instrument">Instrumento</label>
+              <select id="filter-instrument" onchange="renderCatalog()">
+                <option value="all">Todos os instrumentos</option>
+                <option value="Violão">Violão</option>
+                <option value="Teclado">Teclado</option>
+                <option value="Bateria">Bateria</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-level">Nível</label>
+              <select id="filter-level" onchange="renderCatalog()">
+                <option value="all">Todos os níveis</option>
+                <option value="Iniciante">Iniciante</option>
+                <option value="Intermediário">Intermediário</option>
+                <option value="Avançado">Avançado</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-period">Período</label>
+              <select id="filter-period" onchange="renderCatalog()">
+                <option value="all">Manhã, Tarde ou Noite</option>
+                <option value="Manhã">Manhã</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="filter-search">Buscar turma ou professor</label>
+              <input type="search" id="filter-search" placeholder="Ex.: acordes, Ricardo, manhã" oninput="renderCatalog()">
+            </div>
+          </div>
+        </div>
+
+        <div class="card-grid" id="catalog-grid"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. AUTENTICAÇÃO & CADASTROS ==================== -->
+    <section id="view-auth" class="hidden reveal">
+      <div class="container band compact">
+        <div class="headline-stack compact" style="padding-top:0;">
+          <h2>Acesse ou cadastre-se na músicaEAD</h2>
+          <p class="lede">Escolha seu perfil abaixo para entrar, criar sua conta de aluno ou enviar sua candidatura como tutor.</p>
+        </div>
+
+        <div style="display:flex;justify-content:center;">
+          <div class="subtabs" role="tablist" aria-label="Opções de autenticação e cadastro">
+            <button type="button" class="subtab-btn" id="auth-tab-login" onclick="openAuthTab('login')">Entrar (Aluno)</button>
+            <button type="button" class="subtab-btn" id="auth-tab-signup" onclick="openAuthTab('signup')">Crie sua conta</button>
+            <button type="button" class="subtab-btn" id="auth-tab-teacher-login" onclick="openAuthTab('teacher-login')">Login do Tutor/Professor</button>
+            <button type="button" class="subtab-btn" id="auth-tab-apply" onclick="openAuthTab('apply')">Tutor? Trabalhe Conosco.</button>
+            <button type="button" class="subtab-btn" id="auth-tab-admin-login" onclick="openAuthTab('admin-login')">Administração</button>
+          </div>
+        </div>
+
+        <div style="max-width:720px;margin:0 auto;">
+          <!-- Login Aluno -->
+          <div id="auth-panel-login" class="tile stack-md hidden">
+            <div>
+              <h3 class="tile-title">Entrar como Aluno</h3>
+              <p class="muted" style="margin:var(--space-xs) 0 0;">Acesse suas turmas, gravações VOD 24/7 e tarefas enviadas.</p>
+            </div>
+            <div id="student-login-msg"></div>
+            <form class="stack-md" onsubmit="handleStudentLogin(event)">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="login-student-email">E-mail</label>
+                  <input type="email" id="login-student-email" value="mariana.costa@musicaead.com.br" required>
+                </div>
+                <div class="field">
+                  <label for="login-student-pass">Senha</label>
+                  <input type="password" id="login-student-pass" value="••••••••" required>
+                </div>
+              </div>
+              <div class="checkbox-row">
+                <input type="checkbox" id="login-student-2fa" onchange="toggle2FAField('student')">
+                <label for="login-student-2fa">Usar verificação em dois fatores (2FA)</label>
+              </div>
+              <div id="student-2fa-box" class="field hidden">
+                <label for="login-student-code">Código de verificação (use 248190 para testar)</label>
+                <input type="text" id="login-student-code" value="248190" maxlength="6">
+              </div>
+              <div class="row-between">
+                <button type="submit" class="btn btn-primary">Entrar na plataforma</button>
+                <button type="button" class="link-more" onclick="toggleForgotBox()">Esqueci minha senha</button>
+              </div>
+            </form>
+            <div id="forgot-box" class="tile-inset stack-sm hidden">
+              <div class="field">
+                <label for="forgot-email">E-mail para recuperação de senha</label>
+                <input type="email" id="forgot-email" value="mariana.costa@musicaead.com.br">
+              </div>
+              <div class="row-wrap">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="sendRecoveryEmail()">Enviar link de redefinição</button>
+              </div>
+            </div>
+            <div style="border-top:1px solid var(--outline-variant);padding-top:var(--space-md);" class="stack-sm">
+              <span class="muted" style="font-size:0.8125rem;font-weight:500;">Ou entre rapidamente com:</span>
+              <div class="row-wrap">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="socialLogin('mariana')">Continuar com Google (Mariana — Ativa)</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="socialLogin('lucas')">Continuar com Apple (Lucas — Pagamento Pendente)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cadastro Aluno -->
+          <div id="auth-panel-signup" class="tile stack-md hidden">
+            <div>
+              <h3 class="tile-title">Crie sua conta de Aluno</h3>
+              <p class="muted" style="margin:var(--space-xs) 0 0;">Preencha seus dados para participar das turmas ao vivo. Menores de 18 anos requerem autorização do responsável legal.</p>
+            </div>
+            <div id="student-signup-msg"></div>
+            <form class="stack-md" onsubmit="handleStudentSignup(event)">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="signup-name">Nome completo</label>
+                  <input type="text" id="signup-name" required>
+                </div>
+                <div class="field">
+                  <label for="signup-email">E-mail</label>
+                  <input type="email" id="signup-email" required>
+                </div>
+                <div class="field">
+                  <label for="signup-cpf">CPF (somente números ou formatado)</label>
+                  <input type="text" id="signup-cpf" placeholder="000.000.000-00" required>
+                </div>
+                <div class="field">
+                  <label for="signup-birth">Data de nascimento</label>
+                  <input type="date" id="signup-birth" value="2002-05-14" onchange="checkMinorRequirement()" required>
+                </div>
+                <div class="field">
+                  <label for="signup-pass">Senha (mínimo 6 caracteres)</label>
+                  <input type="password" id="signup-pass" required>
+                </div>
+                <div class="field">
+                  <label for="signup-pass-confirm">Confirmar senha</label>
+                  <input type="password" id="signup-pass-confirm" required>
+                </div>
+              </div>
+
+              <div id="minor-guardian-box" class="tile-inset stack-md hidden">
+                <div class="row-wrap">
+                  <span class="chip chip-warning">Menor de 18 anos detectado</span>
+                  <span class="muted" style="font-size:0.875rem;">Em conformidade com a LGPD, é obrigatório informar o responsável legal.</span>
+                </div>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="guardian-name">Nome completo do responsável legal</label>
+                    <input type="text" id="guardian-name">
+                  </div>
+                  <div class="field">
+                    <label for="guardian-email">E-mail do responsável legal</label>
+                    <input type="email" id="guardian-email">
+                  </div>
+                </div>
+                <div class="checkbox-row">
+                  <input type="checkbox" id="guardian-consent">
+                  <label for="guardian-consent">Declaro que o responsável legal autoriza o cadastro e o tratamento de dados conforme a LGPD.</label>
+                </div>
+              </div>
+
+              <div class="row-between">
+                <button type="submit" class="btn btn-primary">Criar conta de aluno</button>
+                <button type="button" class="link-more" onclick="openAuthTab('login')">Já tenho conta</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Login Professor/Tutor -->
+          <div id="auth-panel-teacher-login" class="tile stack-md hidden">
+            <div>
+              <h3 class="tile-title">Login do Tutor/Professor</h3>
+              <p class="muted" style="margin:var(--space-xs) 0 0;">Entre para gerenciar suas aulas ao vivo, corrigir tarefas e enviar rascunhos de turmas.</p>
+            </div>
+            <div id="teacher-login-msg"></div>
+            <form class="stack-md" onsubmit="handleTeacherLogin(event)">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="login-teacher-email">E-mail do tutor</label>
+                  <input type="email" id="login-teacher-email" value="ricardo.mendes@musicaead.com.br" required>
+                </div>
+                <div class="field">
+                  <label for="login-teacher-pass">Senha</label>
+                  <input type="password" id="login-teacher-pass" value="••••••••" required>
+                </div>
+              </div>
+              <div class="row-between">
+                <button type="submit" class="btn btn-primary">Acessar Painel do Tutor</button>
+                <button type="button" class="link-more" onclick="openAuthTab('apply')">Ainda não é tutor? Candidate-se</button>
+              </div>
+            </form>
+            <div style="border-top:1px solid var(--outline-variant);padding-top:var(--space-md);" class="stack-sm">
+              <span class="muted" style="font-size:0.8125rem;font-weight:500;">Contas de tutores cadastrados para teste:</span>
+              <div class="row-wrap" id="teacher-quick-list"></div>
+            </div>
+          </div>
+
+          <!-- Candidatura de Professores -->
+          <div id="auth-panel-apply" class="tile stack-md hidden">
+            <div>
+              <h3 class="tile-title">Tutor? Trabalhe Conosco.</h3>
+              <p class="muted" style="margin:var(--space-xs) 0 0;">Envie sua formação e portfólio. Após validação da nossa equipe administrativa, seu perfil será ativado para lecionar na plataforma.</p>
+            </div>
+            <div id="teacher-apply-msg"></div>
+            <form class="stack-md" onsubmit="handleTeacherApplication(event)">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="apply-name">Nome completo</label>
+                  <input type="text" id="apply-name" required>
+                </div>
+                <div class="field">
+                  <label for="apply-email">E-mail profissional</label>
+                  <input type="email" id="apply-email" required>
+                </div>
+                <div class="field">
+                  <label for="apply-instrument">Instrumento principal</label>
+                  <select id="apply-instrument" required>
+                    <option value="Violão">Violão</option>
+                    <option value="Teclado">Teclado</option>
+                    <option value="Bateria">Bateria</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="apply-experience">Anos de experiência docente</label>
+                  <input type="number" id="apply-experience" min="1" max="50" value="5" required>
+                </div>
+                <div class="field full">
+                  <label for="apply-education">Formação acadêmica e musical</label>
+                  <input type="text" id="apply-education" placeholder="Ex.: Licenciatura em Música, Conservatório Dramático e Musical" required>
+                </div>
+                <div class="field full">
+                  <label for="apply-portfolio">Portfólio e experiência artística (links ou descrição detalhada)</label>
+                  <textarea id="apply-portfolio" placeholder="Descreva suas gravações, projetos, metodologia de aula e links de portfólio..." required></textarea>
+                </div>
+                <div class="field full">
+                  <label for="apply-docs">Comprovantes e certificados (selecione arquivo ou informe documento)</label>
+                  <input type="file" id="apply-docs" accept=".pdf,.png,.jpg">
+                </div>
+              </div>
+              <div class="row-between">
+                <button type="submit" class="btn btn-primary">Enviar candidatura para análise</button>
+                <span class="muted" style="font-size:0.8125rem;">Status inicial: Pendente de validação</span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Login Admin -->
+          <div id="auth-panel-admin-login" class="tile stack-md hidden">
+            <div>
+              <h3 class="tile-title">Acesso da Administração</h3>
+              <p class="muted" style="margin:var(--space-xs) 0 0;">Painel de moderação de tutores, aprovação de rascunhos e solicitação de novos cursos.</p>
+            </div>
+            <form class="stack-md" onsubmit="handleAdminLogin(event)">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="login-admin-email">E-mail institucional</label>
+                  <input type="email" id="login-admin-email" value="coordenacao@musicaead.com.br" required>
+                </div>
+                <div class="field">
+                  <label for="login-admin-pass">Senha</label>
+                  <input type="password" id="login-admin-pass" value="••••••••" required>
+                </div>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-dark">Entrar no Painel Administrativo</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. CHECKOUT / PAGAMENTO R$ 149/MÊS ==================== -->
+    <section id="view-checkout" class="hidden reveal">
+      <div class="container band compact">
+        <div class="headline-stack compact" style="padding-top:0;">
+          <p class="eyebrow">Liberação de acesso e matrícula</p>
+          <h2>Assinatura Única — R$ 149/mês</h2>
+          <p class="lede">Para confirmar sua vaga na turma e liberar as aulas ao vivo e o acervo gravado 24/7, conclua o pagamento da sua assinatura.</p>
+        </div>
+
+        <div id="checkout-feedback" style="max-width:960px;margin:0 auto var(--space-lg);"></div>
+
+        <div class="two-col" style="max-width:960px;margin:0 auto;">
+          <div class="tile stack-md">
+            <div class="row-between">
+              <span class="chip chip-blue">Resumo do pedido</span>
+              <span class="muted" style="font-size:0.875rem;">Renovação mensal</span>
+            </div>
+            <div id="checkout-class-summary" class="tile-inset stack-sm"></div>
+            <div style="border-top:1px solid var(--outline-variant);padding-top:var(--space-md);" class="stack-xs">
+              <div class="row-between">
+                <span class="muted">Assinatura ilimitada (todos os cursos)</span>
+                <strong>R$ 149,00</strong>
+              </div>
+              <div class="row-between">
+                <span class="muted">Taxa de matrícula</span>
+                <span style="color:var(--positive);font-weight:500;">Isenta</span>
+              </div>
+              <div class="row-between" style="padding-top:var(--space-sm);border-top:1px solid var(--outline-variant);font-size:1.125rem;">
+                <strong>Total hoje</strong>
+                <strong>R$ 149,00</strong>
+              </div>
+            </div>
+            <button type="button" class="link-more" onclick="navigateTo('catalog')">Voltar ao catálogo de cursos</button>
+          </div>
+
+          <div class="tile stack-md">
+            <h3 class="tile-title">Forma de pagamento</h3>
+            <div class="segmented" role="group" aria-label="Método de pagamento">
+              <button type="button" class="seg-btn active" id="pay-method-card" onclick="selectPaymentMethod('card')">Cartão de Crédito</button>
+              <button type="button" class="seg-btn" id="pay-method-pix" onclick="selectPaymentMethod('pix')">PIX Instantâneo</button>
+            </div>
+
+            <div id="pay-card-fields" class="form-grid">
+              <div class="field full">
+                <label for="card-holder">Nome impresso no cartão</label>
+                <input type="text" id="card-holder" value="Lucas Ferreira">
+              </div>
+              <div class="field full">
+                <label for="card-number">Número do cartão</label>
+                <input type="text" id="card-number" value="4532 •••• •••• 8891">
+              </div>
+              <div class="field">
+                <label for="card-exp">Validade</label>
+                <input type="text" id="card-exp" value="09/2030">
+              </div>
+              <div class="field">
+                <label for="card-cvv">CVV</label>
+                <input type="text" id="card-cvv" value="412">
+              </div>
+            </div>
+
+            <div id="pay-pix-fields" class="tile-inset stack-sm hidden">
+              <span class="chip chip-green" style="align-self:flex-start;">Aprovação imediata via PIX</span>
+              <p class="muted" style="margin:0;font-size:0.875rem;">Chave copia e cola gerada para sua matrícula de R$ 149,00:</p>
+              <code style="background:var(--surface-container-low);padding:var(--space-sm);border-radius:var(--rounded-md);font-size:0.8125rem;word-break:break-all;">00020126420014br.gov.bcb.pix0120pagamentos@musicaead5204000053039865406149.00</code>
+            </div>
+
+            <div class="stack-sm" style="margin-top:var(--space-sm);">
+              <button type="button" class="btn btn-primary" onclick="processCheckout(true)">Confirmar pagamento e liberar acesso</button>
+              <button type="button" class="btn btn-secondary" onclick="processCheckout(false)">Simular falha no pagamento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. PAINEL DO ALUNO ==================== -->
+    <section id="view-student" class="hidden reveal">
+      <div class="container band compact">
+        <div class="row-between" style="margin-bottom:var(--space-lg);">
+          <div>
+            <p class="eyebrow" style="margin-bottom:var(--space-xs);">Área do Aluno</p>
+            <h2 class="section-title" id="student-welcome-title">Olá, estudante</h2>
+          </div>
+          <div class="row-wrap" id="student-sub-badge-wrap"></div>
+        </div>
+
+        <div id="student-unpaid-alert" class="hidden" style="margin-bottom:var(--space-lg);"></div>
+
+        <div class="card-grid-dense" id="student-kpis" style="margin-bottom:var(--space-lg);"></div>
+
+        <div class="subtabs" role="tablist" aria-label="Abas do Painel do Aluno">
+          <button type="button" class="subtab-btn active" id="student-tab-courses" onclick="switchStudentTab('courses')">Cursos Ativos</button>
+          <button type="button" class="subtab-btn" id="student-tab-tasks" onclick="switchStudentTab('tasks')">Minhas Tarefas e Notas</button>
+          <button type="button" class="subtab-btn" id="student-tab-schedule" onclick="switchStudentTab('schedule')">Agenda Semanal</button>
+        </div>
+
+        <div id="student-panel-courses" class="stack-lg"></div>
+        <div id="student-panel-tasks" class="stack-lg hidden"></div>
+        <div id="student-panel-schedule" class="stack-lg hidden"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 6. SALA DE AULA ONLINE (LIVE & VOD PLAYER) ==================== -->
+    <section id="view-classroom" class="hidden reveal">
+      <div class="container band compact">
+        <div class="row-between" style="margin-bottom:var(--space-md);">
+          <div>
+            <p class="eyebrow" style="margin-bottom:var(--space-xs);" id="classroom-mode-eyebrow">Sala de Aula Online</p>
+            <h2 class="section-title" id="classroom-title">Violão Popular — Aula ao Vivo</h2>
+            <p class="muted" style="margin:var(--space-xs) 0 0;" id="classroom-subtitle"></p>
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="exitClassroom()">Voltar ao painel</button>
+        </div>
+
+        <!-- Pre-join Audio/Video Test (for Live sessions) -->
+        <div id="classroom-preflight" class="tile stack-md hidden" style="max-width:680px;margin:var(--space-lg) auto;">
+          <div>
+            <span class="chip chip-blue">Verificação prévia obrigatória</span>
+            <h3 class="tile-title" style="margin-top:var(--space-sm);">Teste sua câmera e microfone antes de entrar</h3>
+            <p class="muted" style="margin:var(--space-xs) 0 0;">Confira os dispositivos para garantir transmissão de áudio de alta qualidade na aula prática.</p>
+          </div>
+          <div class="two-col">
+            <div class="tile-inset stack-sm">
+              <div class="row-between">
+                <strong>Câmera</strong>
+                <span class="chip chip-green" id="preflight-cam-status">Ativada</span>
+              </div>
+              <div style="background:var(--tertiary);color:var(--background);border-radius:var(--rounded-md);padding:var(--space-lg);text-align:center;">
+                <i data-lucide="video" style="width:28px;height:28px;margin:0 auto var(--space-xs);" aria-hidden="true"></i>
+                <div style="font-size:0.875rem;" id="preflight-cam-preview">Pré-visualização HD pronta</div>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="togglePreflightDevice('cam')">Alternar câmera</button>
+            </div>
+            <div class="tile-inset stack-sm">
+              <div class="row-between">
+                <strong>Microfone e Áudio</strong>
+                <span class="chip chip-green" id="preflight-mic-status">Captando</span>
+              </div>
+              <div class="stack-xs" style="padding-block:var(--space-md);">
+                <span class="muted" style="font-size:0.8125rem;">Nível de entrada de áudio</span>
+                <div class="meter-track"><div class="meter-fill good" id="preflight-mic-meter" style="width:68%;"></div></div>
+              </div>
+              <div class="row-wrap">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="togglePreflightDevice('mic')">Alternar microfone</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="playTestTone()">Testar som (Lá 440Hz)</button>
+              </div>
+            </div>
+          </div>
+          <div class="row-between">
+            <span class="muted" style="font-size:0.875rem;">Áudio em baixa latência configurado para instrumentos musicais.</span>
+            <button type="button" class="btn btn-primary" onclick="confirmEnterLiveRoom()">Entrar na sala agora</button>
+          </div>
+        </div>
+
+        <!-- Main Classroom Studio -->
+        <div id="classroom-studio" class="studio-grid">
+          <div class="stack-md">
+            <div class="stage-box">
+              <div class="stage-top">
+                <div class="row-wrap">
+                  <span class="chip chip-danger hidden" id="stage-live-pill">AO VIVO</span>
+                  <span class="chip chip-blue hidden" id="stage-vod-pill">GRAVAÇÃO VOD 24/7</span>
+                  <span class="chip chip-neutral hidden" id="stage-rec-pill">Gravação automática ativa</span>
+                </div>
+                <span style="font-size:0.875rem;opacity:0.85;" id="stage-teacher-badge">Prof. Ricardo Mendes</span>
+              </div>
+
+              <div class="stage-visual">
+                <div id="stage-chord-display" style="font-family:var(--font-headline);font-size:1.75rem;font-weight:700;letter-spacing:-0.02em;">
+                  Exercício Prático: Progressão II – V – I
+                </div>
+                <p style="margin:0;opacity:0.8;max-width:46ch;" id="stage-lesson-desc">
+                  Ouça a base harmônica sintetizada em tempo real e acompanhe a partitura complementar ao lado.
+                </p>
+                <div id="stage-screenshare-banner" class="hidden" style="background:var(--primary);color:var(--on-primary);padding:var(--space-sm) var(--space-md);border-radius:var(--rounded-md);font-size:0.875rem;font-weight:500;">
+                  Compartilhamento de tela ativo: Partitura e Digitação em foco
+                </div>
+                <div class="wave-bars" id="stage-wave-bars" aria-hidden="true">
+                  <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                  <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                  <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                </div>
+              </div>
+
+              <div class="stage-controls">
+                <div class="row-wrap">
+                  <button type="button" class="stage-btn active" id="btn-stage-audio" onclick="toggleAudioPlayback()">
+                    <i data-lucide="play" style="width:16px;height:16px;" aria-hidden="true"></i>
+                    <span id="btn-stage-audio-label">Ouvir demonstração musical</span>
+                  </button>
+                  <button type="button" class="stage-btn" id="btn-stage-mic" onclick="toggleStageControl('mic')">Microfone: Ligado</button>
+                  <button type="button" class="stage-btn" id="btn-stage-cam" onclick="toggleStageControl('cam')">Câmera: Ligada</button>
+                  <button type="button" class="stage-btn hidden" id="btn-stage-share" onclick="toggleScreenShare()">Compartilhar tela</button>
+                </div>
+                <button type="button" class="stage-btn danger hidden" id="btn-end-live-save" onclick="endLiveAndSaveVod()">Encerrar aula e publicar VOD</button>
+              </div>
+            </div>
+
+            <div class="tile stack-sm">
+              <h3 class="tile-title">Sobre esta aula</h3>
+              <p class="muted" style="margin:0;" id="classroom-notes"></p>
+            </div>
+          </div>
+
+          <!-- Side Panel: Chat & Materials -->
+          <div class="tile stack-md">
+            <div class="subtabs" style="margin-bottom:0;width:100%;">
+              <button type="button" class="subtab-btn active" id="room-tab-chat" onclick="switchRoomSideTab('chat')" style="flex:1;justify-content:center;">Chat ao Vivo</button>
+              <button type="button" class="subtab-btn" id="room-tab-materials" onclick="switchRoomSideTab('materials')" style="flex:1;justify-content:center;">Materiais</button>
+            </div>
+
+            <div id="room-panel-chat" class="stack-md">
+              <div class="chat-list" id="room-chat-list"></div>
+              <form class="stack-sm" onsubmit="sendChatMessage(event)">
+                <div class="field">
+                  <label for="room-chat-input">Enviar mensagem na sala</label>
+                  <input type="text" id="room-chat-input" placeholder="Tire sua dúvida ou comente o compasso...">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Enviar mensagem</button>
+              </form>
+            </div>
+
+            <div id="room-panel-materials" class="stack-sm hidden" id="room-materials-wrap">
+              <div id="room-materials-list" class="stack-sm"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7. PAINEL DO PROFESSOR / TUTOR ==================== -->
+    <section id="view-teacher" class="hidden reveal">
+      <div class="container band compact">
+        <div class="row-between" style="margin-bottom:var(--space-lg);">
+          <div>
+            <p class="eyebrow" style="margin-bottom:var(--space-xs);">Painel do Tutor</p>
+            <h2 class="section-title" id="teacher-welcome-title">Bem-vindo, Tutor</h2>
+          </div>
+          <div class="row-wrap" id="teacher-instruments-badges"></div>
+        </div>
+
+        <div class="card-grid-dense" id="teacher-kpis" style="margin-bottom:var(--space-lg);"></div>
+
+        <div class="subtabs" role="tablist" aria-label="Abas do Painel do Tutor">
+          <button type="button" class="subtab-btn active" id="teacher-tab-live" onclick="switchTeacherTab('live')">Próximas Aulas ao Vivo</button>
+          <button type="button" class="subtab-btn" id="teacher-tab-courses" onclick="switchTeacherTab('courses')">Cursos & Aulas</button>
+          <button type="button" class="subtab-btn" id="teacher-tab-grading" onclick="switchTeacherTab('grading')">Tarefas Pendentes de Correção</button>
+          <button type="button" class="subtab-btn" id="teacher-tab-drafts" onclick="switchTeacherTab('drafts')">Notificações & Rascunhos</button>
+        </div>
+
+        <div id="teacher-panel-live" class="stack-lg"></div>
+        <div id="teacher-panel-courses" class="stack-lg hidden"></div>
+        <div id="teacher-panel-grading" class="stack-lg hidden"></div>
+        <div id="teacher-panel-drafts" class="stack-lg hidden"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 8. PAINEL DO ADMINISTRADOR ==================== -->
+    <section id="view-admin" class="hidden reveal">
+      <div class="container band compact">
+        <div class="row-between" style="margin-bottom:var(--space-lg);">
+          <div>
+            <p class="eyebrow" style="margin-bottom:var(--space-xs);">Gestão Acadêmica e Operacional</p>
+            <h2 class="section-title">Painel do Administrador</h2>
+          </div>
+          <span class="chip chip-blue">Acesso total de coordenação</span>
+        </div>
+
+        <div class="card-grid-dense" id="admin-kpis" style="margin-bottom:var(--space-lg);"></div>
+
+        <div class="subtabs" role="tablist" aria-label="Abas do Painel do Administrador">
+          <button type="button" class="subtab-btn active" id="admin-tab-overview" onclick="switchAdminTab('overview')">Visão Geral de Cursos Ativos</button>
+          <button type="button" class="subtab-btn" id="admin-tab-request" onclick="switchAdminTab('request')">Solicitar Novo Curso</button>
+          <button type="button" class="subtab-btn" id="admin-tab-drafts" onclick="switchAdminTab('drafts')">Aprovação de Rascunhos</button>
+          <button type="button" class="subtab-btn" id="admin-tab-tutors" onclick="switchAdminTab('tutors')">Moderação de Tutores</button>
+        </div>
+
+        <div id="admin-panel-overview" class="stack-lg"></div>
+        <div id="admin-panel-request" class="stack-lg hidden"></div>
+        <div id="admin-panel-drafts" class="stack-lg hidden"></div>
+        <div id="admin-panel-tutors" class="stack-lg hidden"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container row-between">
+      <div>
+        <strong>músicaEAD</strong> — Plataforma de ensino musical online ao vivo e acervo VOD 24/7. Assinatura única de R$ 149/mês.
+      </div>
+      <div class="row-wrap">
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-reset-demo" onclick="resetDemoState(this)">Restaurar dados iniciais</button>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+
+  <api-shim></api-shim>
+  <script>
+    /* ==================== INITIAL GROUNDED DATA ==================== */
+    function buildDefaultState() {
+      return {
+        currentView: `landing`,
+        currentUser: null,
+        pendingEnrollClassId: null,
+        checkoutMethod: `card`,
+        activeStudentTab: `courses`,
+        activeTeacherTab: `live`,
+        activeAdminTab: `overview`,
+        activeAuthTab: `login`,
+        classroomContext: null,
+        selectedTeacherClassId: `cls-violao-ini`,
+        editingDraftId: null,
+        tutors: [
+          {
+            id: `tut-ricardo`,
+            name: `Prof. Ricardo Mendes`,
+            email: `ricardo.mendes@musicaead.com.br`,
+            instruments: [`Violão`, `Teclado`],
+            education: `Licenciatura em Música — UNESP; Pós em Harmonia Popular`,
+            experienceYears: 11,
+            portfolio: `Arranjador e educador com 11 anos de ensino presencial e EAD; mais de 40 videoaulas e cadernos de harmonia publicados.`,
+            docsName: `diploma_unesp_ricardo.pdf`,
+            status: `active`,
+            maxActiveClasses: 5,
+            rejectReason: ``
+          },
+          {
+            id: `tut-camila`,
+            name: `Prof. Camila Duarte`,
+            email: `camila.duarte@musicaead.com.br`,
+            instruments: [`Bateria`],
+            education: `Bacharelado em Percussão e Bateria — Conservatório Souza Lima`,
+            experienceYears: 8,
+            portfolio: `Baterista de sessão e professora especializada em grooves brasileiros, leitura rítmica e independência.`,
+            docsName: `certificado_souza_lima.pdf`,
+            status: `active`,
+            maxActiveClasses: 4,
+            rejectReason: ``
+          },
+          {
+            id: `tut-beatriz`,
+            name: `Prof. Beatriz Nogueira`,
+            email: `beatriz.nogueira@musicaead.com.br`,
+            instruments: [`Teclado`, `Violão`],
+            education: `Mestrado em Pedagogia Musical — UFRJ`,
+            experienceYears: 9,
+            portfolio: `Especialista em iniciação musical de adultos, percepção harmônica e arranjo para teclado.`,
+            docsName: `mestrado_ufrj_beatriz.pdf`,
+            status: `active`,
+            maxActiveClasses: 4,
+            rejectReason: ``
+          },
+          {
+            id: `tut-thiago`,
+            name: `Thiago Alencar`,
+            email: `thiago.alencar@musicaead.com.br`,
+            instruments: [`Violão`],
+            education: `Conservatório Brasileiro de Música — Violão Erudito e Popular`,
+            experienceYears: 6,
+            portfolio: `Portfólio com gravações solo de fingerstyle, choro e MPB; 6 anos lecionando em escolas de música.`,
+            docsName: `portfolio_certificados_thiago.pdf`,
+            status: `pending`,
+            maxActiveClasses: 3,
+            rejectReason: ``
+          },
+          {
+            id: `tut-larissa`,
+            name: `Larissa Prado`,
+            email: `larissa.prado@musicaead.com.br`,
+            instruments: [`Bateria`],
+            education: `Curso Técnico em Bateria Moderna — EM&T`,
+            experienceYears: 4,
+            portfolio: `Vídeos didáticos de técnica de mãos, rudimentos e aplicação em pop/rock.`,
+            docsName: `emt_larissa_prado.pdf`,
+            status: `pending`,
+            maxActiveClasses: 3,
+            rejectReason: ``
+          }
+        ],
+        students: [
+          {
+            id: `stu-mariana`,
+            name: `Mariana Costa`,
+            email: `mariana.costa@musicaead.com.br`,
+            cpf: `384.910.225-04`,
+            birthDate: `1999-08-19`,
+            paid: true,
+            enrolledClassIds: [`cls-violao-ini`, `cls-teclado-ini`],
+            waitlistClassIds: []
+          },
+          {
+            id: `stu-lucas`,
+            name: `Lucas Ferreira`,
+            email: `lucas.ferreira@musicaead.com.br`,
+            cpf: `419.552.108-77`,
+            birthDate: `2001-03-11`,
+            paid: false,
+            enrolledClassIds: [],
+            waitlistClassIds: []
+          }
+        ],
+        classes: [
+          {
+            id: `cls-violao-ini`,
+            title: `Violão Popular: Primeiros Acordes e Ritmos`,
+            instrument: `Violão`,
+            level: `Iniciante`,
+            period: `Noite`,
+            schedule: `Seg, Qua e Sex • 19h00 – 20h00`,
+            nextLive: `Segunda-feira, 19h00`,
+            tutorId: `tut-ricardo`,
+            maxSpots: 10,
+            enrolledCount: 7,
+            status: `published`,
+            summary: `Postura, afinação, batidas essenciais de MPB e pop e transição fluida de acordes.`
+          },
+          {
+            id: `cls-violao-int`,
+            title: `Violão Intermediário: Pestanas, Bossa e Dedilhado`,
+            instrument: `Violão`,
+            level: `Intermediário`,
+            period: `Tarde`,
+            schedule: `Ter, Qui e Sex • 15h00 – 16h00`,
+            nextLive: `Terça-feira, 15h00`,
+            tutorId: `tut-ricardo`,
+            maxSpots: 10,
+            enrolledCount: 9,
+            status: `published`,
+            summary: `Harmonia funcional, condução de baixo no polegar, levadas brasileiras e leitura rítmica.`
+          },
+          {
+            id: `cls-violao-adv`,
+            title: `Violão Avançado: Improvisação e Chord Melody`,
+            instrument: `Violão`,
+            level: `Avançado`,
+            period: `Noite`,
+            schedule: `Ter, Qui e Sáb • 20h30 – 21h30`,
+            nextLive: `Terça-feira, 20h30`,
+            tutorId: `tut-ricardo`,
+            maxSpots: 10,
+            enrolledCount: 10,
+            status: `published`,
+            summary: `Arranjo solo, inversões avançadas, modos gregos e substituição de acordes.`
+          },
+          {
+            id: `cls-teclado-ini`,
+            title: `Teclado Iniciante: Leitura e Acompanhamento`,
+            instrument: `Teclado`,
+            level: `Iniciante`,
+            period: `Manhã`,
+            schedule: `Seg, Qua e Sex • 09h30 – 10h30`,
+            nextLive: `Segunda-feira, 09h30`,
+            tutorId: `tut-beatriz`,
+            maxSpots: 10,
+            enrolledCount: 6,
+            status: `published`,
+            summary: `Independência das mãos, formação de tríades, cifras e leitura básica na clave de sol.`
+          },
+          {
+            id: `cls-teclado-int`,
+            title: `Teclado Intermediário: Voicings e Arranjo`,
+            instrument: `Teclado`,
+            level: `Intermediário`,
+            period: `Noite`,
+            schedule: `Seg, Qua e Qui • 20h00 – 21h00`,
+            nextLive: `Quarta-feira, 20h00`,
+            tutorId: `tut-beatriz`,
+            maxSpots: 10,
+            enrolledCount: 8,
+            status: `published`,
+            summary: `Acordes com sétimas e tensões, encadeamento suave e timbres para banda.`
+          },
+          {
+            id: `cls-bateria-ini`,
+            title: `Bateria Iniciante: Groove, Tempo e Coordenação`,
+            instrument: `Bateria`,
+            level: `Iniciante`,
+            period: `Tarde`,
+            schedule: `Seg, Qua e Sex • 16h30 – 17h30`,
+            nextLive: `Quarta-feira, 16h30`,
+            tutorId: `tut-camila`,
+            maxSpots: 10,
+            enrolledCount: 5,
+            status: `published`,
+            summary: `Pegada de baquetas, subdivisão rítmica com metrônomo e levadas de rock, pop e funk.`
+          },
+          {
+            id: `cls-bateria-adv`,
+            title: `Bateria Avançada: Ritmos Brasileiros e Polirritmia`,
+            instrument: `Bateria`,
+            level: `Avançado`,
+            period: `Manhã`,
+            schedule: `Ter, Qui e Sáb • 10h00 – 11h00`,
+            nextLive: `Quinta-feira, 10h00`,
+            tutorId: `tut-camila`,
+            maxSpots: 10,
+            enrolledCount: 9,
+            status: `published`,
+            summary: `Samba, baião, partido-alto, ghost notes e viradas lineares em alta precisão.`
+          }
+        ],
+        drafts: [
+          {
+            id: `drf-1`,
+            tutorId: `tut-ricardo`,
+            title: `Violão Popular — Turma Matinal Intensiva`,
+            instrument: `Violão`,
+            level: `Iniciante`,
+            period: `Manhã`,
+            schedule: `Seg, Qua e Sex • 08h30 – 09h30`,
+            maxSpots: 10,
+            summary: `Nova turma matinal focada em repertório popular brasileiro desde a primeira semana.`,
+            status: `pending_approval`,
+            adminNote: ``
+          },
+          {
+            id: `drf-2`,
+            tutorId: `tut-camila`,
+            title: `Bateria Intermediária: Viradas e Dinâmica`,
+            instrument: `Bateria`,
+            level: `Intermediário`,
+            period: `Noite`,
+            schedule: `Ter, Qui e Sex • 19h30 – 20h30`,
+            maxSpots: 10,
+            summary: `Aplicação de rudimentos no kit, dinâmica em palco e leitura de partituras rítmicas.`,
+            status: `draft`,
+            adminNote: ``
+          }
+        ],
+        adminRequests: [
+          {
+            id: `req-1`,
+            tutorId: `tut-ricardo`,
+            instrument: `Teclado`,
+            level: `Avançado`,
+            period: `Tarde`,
+            message: `Temos demanda crescente de alunos para uma turma vespertina de Teclado Avançado com foco em harmonia modal. Pode estruturar um rascunho?`,
+            createdAt: `20/11/2026`,
+            status: `open`
+          }
+        ],
+        vods: [
+          {
+            id: `vod-1`,
+            classId: `cls-violao-ini`,
+            module: `Módulo 1 — Fundamentos`,
+            title: `Aula 04: Troca ágil entre Dó, Sol e Lá menor`,
+            duration: `48 min`,
+            recordedAt: `18/11/2026`,
+            chordFocus: `C — G — Am — F`
+          },
+          {
+            id: `vod-2`,
+            classId: `cls-violao-ini`,
+            module: `Módulo 2 — Batidas Brasileiras`,
+            title: `Aula 05: Levada de Pop-Rock e controle de dinâmica`,
+            duration: `52 min`,
+            recordedAt: `20/11/2026`,
+            chordFocus: `G — D/F# — Em7 — Cadd9`
+          },
+          {
+            id: `vod-3`,
+            classId: `cls-teclado-ini`,
+            module: `Módulo 1 — Tríades`,
+            title: `Aula 03: Inversões de acordes maiores na mão direita`,
+            duration: `45 min`,
+            recordedAt: `19/11/2026`,
+            chordFocus: `C — C/E — C/G — F`
+          },
+          {
+            id: `vod-4`,
+            classId: `cls-bateria-ini`,
+            module: `Módulo 1 — Pulsação`,
+            title: `Aula 02: Semínimas, colcheias e independência de chimbal`,
+            duration: `50 min`,
+            recordedAt: `19/11/2026`,
+            chordFocus: `Groove 80 BPM`
+          }
+        ],
+        materials: [
+          {
+            id: `mat-1`,
+            classId: `cls-violao-ini`,
+            module: `Módulo 1 — Fundamentos`,
+            type: `PDF / Partitura`,
+            title: `Caderno de Diagramas de Acordes Essenciais.pdf`
+          },
+          {
+            id: `mat-2`,
+            classId: `cls-violao-ini`,
+            module: `Módulo 2 — Batidas Brasileiras`,
+            type: `Áudio de Exercício`,
+            title: `Play-along 85 BPM — Progressão C G Am F.mp3`
+          },
+          {
+            id: `mat-3`,
+            classId: `cls-teclado-ini`,
+            module: `Módulo 1 — Tríades`,
+            type: `PDF / Partitura`,
+            title: `Guia Visual de Inversões no Teclado.pdf`
+          }
+        ],
+        tasks: [
+          {
+            id: `tsk-1`,
+            classId: `cls-violao-ini`,
+            lessonTitle: `Aula 05: Levada de Pop-Rock e controle de dinâmica`,
+            title: `Gravar 1 minuto da progressão G - D - Em - C a 80 BPM`,
+            description: `Mantenha o pulso firme com o metrônomo e destaque o tempo 2 e 4 na mão direita.`,
+            dueDate: `28/11/2026`,
+            submissions: [
+              {
+                id: `sub-1`,
+                studentId: `stu-mariana`,
+                studentName: `Mariana Costa`,
+                submittedAt: `21/11/2026`,
+                attachmentName: `mariana_violao_80bpm.mp3`,
+                note: `Professor, gravei com metrônomo em 80 BPM e senti dúvida na transição do Em7 para o Cadd9.`,
+                status: `pending`,
+                grade: null,
+                feedback: ``
+              }
+            ]
+          },
+          {
+            id: `tsk-2`,
+            classId: `cls-teclado-ini`,
+            lessonTitle: `Aula 03: Inversões de acordes maiores na mão direita`,
+            title: `Sequência harmônica com inversões próximas`,
+            description: `Execute C - F - G - C usando o menor movimento possível entre as teclas.`,
+            dueDate: `29/11/2026`,
+            submissions: []
+          },
+          {
+            id: `tsk-3`,
+            classId: `cls-violao-ini`,
+            lessonTitle: `Aula 04: Troca ágil entre Dó, Sol e Lá menor`,
+            title: `Exercício de limpeza das cordas soltas`,
+            description: `Toque cada acorde corda por corda verificando se todas soam limpas sem trastejamento.`,
+            dueDate: `19/11/2026`,
+            submissions: [
+              {
+                id: `sub-2`,
+                studentId: `stu-mariana`,
+                studentName: `Mariana Costa`,
+                submittedAt: `19/11/2026`,
+                attachmentName: `exercicio_limpeza_mariana.mp4`,
+                note: `Envio o vídeo de frente para o braço do violão conforme combinado em aula.`,
+                status: `graded`,
+                grade: `9.5`,
+                feedback: `Excelente postura da mão esquerda! Todas as notas do Dó maior soaram definidas. Continue mantendo o polegar apoiado atrás do braço.`
+              }
+            ]
+          }
+        ],
+        chatMessages: [
+          {
+            id: `msg-1`,
+            classId: `cls-violao-ini`,
+            author: `Prof. Ricardo Mendes`,
+            time: `19:02`,
+            text: `Boa noite, turma! Já testaram o áudio? Vamos aquecer na progressão C – G – Am – F.`
+          },
+          {
+            id: `msg-2`,
+            classId: `cls-violao-ini`,
+            author: `Mariana Costa`,
+            time: `19:04`,
+            text: `Tudo ótimo por aqui, professor! A partitura do Módulo 2 já está aberta.`
+          }
+        ]
+      };
+    }
+
+    let appState = buildDefaultState();
+    let audioCtx = null;
+    let audioInterval = null;
+    let isAudioPlaying = false;
+    let preflightCamOn = true;
+    let preflightMicOn = true;
+    let micAnimTimer = null;
+    let stageMicOn = true;
+    let stageCamOn = true;
+    let stageScreenShared = false;
+
+    /* ==================== STATE PERSISTENCE (SHIM API) ==================== */
+    async function saveState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          await window.notebookAppApi.setAppState(appState);
+        }
+      } catch (e) {
+        // Ignore transient save errors in offline preview
+      }
+    }
+
+    async function loadState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object` && Array.isArray(saved.classes)) {
+            appState = saved;
+          }
+        }
+      } catch (e) {
+        appState = buildDefaultState();
+      }
+    }
+
+    /* ==================== HELPERS ==================== */
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function escapeHtml(str) {
+      return String(str == null ? `` : str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`)
+        .replace(/'/g, `&#39;`);
+    }
+
+    function showToast(message) {
+      const region = byId(`toast-region`);
+      if (!region) return;
+      const item = document.createElement(`div`);
+      item.className = `toast`;
+      item.textContent = message;
+      region.appendChild(item);
+      setTimeout(function () {
+        if (item.parentNode) item.parentNode.removeChild(item);
+      }, 3600);
+    }
+
+    function refreshIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+    }
+
+    function getTutorById(id) {
+      return appState.tutors.find(function (t) { return t.id === id; }) || null;
+    }
+
+    function getStudentById(id) {
+      return appState.students.find(function (s) { return s.id === id; }) || null;
+    }
+
+    function getClassById(id) {
+      return appState.classes.find(function (c) { return c.id === id; }) || null;
+    }
+
+    function getCurrentStudent() {
+      if (!appState.currentUser || appState.currentUser.role !== `student`) return null;
+      return getStudentById(appState.currentUser.id);
+    }
+
+    function getCurrentTutor() {
+      if (!appState.currentUser || appState.currentUser.role !== `teacher`) return null;
+      return getTutorById(appState.currentUser.id);
+    }
+
+    function getVacancyStatus(cls) {
+      const remaining = Math.max(0, cls.maxSpots - cls.enrolledCount);
+      if (remaining === 0) return { label: `Lotada`, chipClass: `chip-neutral`, barClass: `full`, remaining: 0 };
+      if (remaining <= 2) return { label: `Últimas vagas`, chipClass: `chip-warning`, barClass: `warn`, remaining: remaining };
+      return { label: `Aberta`, chipClass: `chip-green`, barClass: ``, remaining: remaining };
+    }
+
+    function calculateAge(birthStr) {
+      if (!birthStr) return 21;
+      const parts = birthStr.split(`-`);
+      if (parts.length !== 3) return 21;
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10);
+      const day = parseInt(parts[2], 10);
+      const refYear = 2026;
+      const refMonth = 11;
+      const refDay = 22;
+      let age = refYear - year;
+      if (refMonth < month || (refMonth === month && refDay < day)) {
+        age -= 1;
+      }
+      return age;
+    }
+
+    function validateCPF(raw) {
+      const digits = String(raw || ``).replace(/\D/g, ``);
+      return digits.length === 11 && !/^(\d)\1{10}$/.test(digits);
+    }
+
+    /* ==================== NAVIGATION & HEADER ==================== */
+    function navigateTo(view) {
+      stopAudioPlayback();
+      if (micAnimTimer) {
+        clearInterval(micAnimTimer);
+        micAnimTimer = null;
+      }
+
+      // Access guards (RBAC)
+      if (view === `student` && (!appState.currentUser || appState.currentUser.role !== `student`)) {
+        showToast(`Acesso restrito ao perfil de Aluno.`);
+        openAuthTab(`login`);
+        return;
+      }
+      if (view === `teacher` && (!appState.currentUser || appState.currentUser.role !== `teacher`)) {
+        showToast(`Acesso restrito ao perfil de Tutor/Professor.`);
+        openAuthTab(`teacher-login`);
+        return;
+      }
+      if (view === `admin` && (!appState.currentUser || appState.currentUser.role !== `admin`)) {
+        showToast(`Acesso restrito à Administração.`);
+        openAuthTab(`admin-login`);
+        return;
+      }
+
+      appState.currentView = view;
+      const views = [`landing`, `catalog`, `auth`, `checkout`, `student`, `classroom`, `teacher`, `admin`];
+      views.forEach(function (v) {
+        const el = byId(`view-` + v);
+        if (el) {
+          if (v === view) el.classList.remove(`hidden`);
+          else el.classList.add(`hidden`);
+        }
+      });
+
+      renderAll();
+      saveState();
+      window.scrollTo({ top: 0, behavior: `smooth` });
+    }
+
+    function navigateToWorkspace() {
+      if (!appState.currentUser) {
+        openAuthTab(`login`);
+        return;
+      }
+      if (appState.currentUser.role === `student`) navigateTo(`student`);
+      else if (appState.currentUser.role === `teacher`) navigateTo(`teacher`);
+      else if (appState.currentUser.role === `admin`) navigateTo(`admin`);
+    }
+
+    function openAuthTab(tab) {
+      appState.activeAuthTab = tab;
+      appState.currentView = `auth`;
+      const views = [`landing`, `catalog`, `auth`, `checkout`, `student`, `classroom`, `teacher`, `admin`];
+      views.forEach(function (v) {
+        const el = byId(`view-` + v);
+        if (el) {
+          if (v === `auth`) el.classList.remove(`hidden`);
+          else el.classList.add(`hidden`);
+        }
+      });
+      renderAuthTabs();
+      renderHeader();
+      saveState();
+      window.scrollTo({ top: 0, behavior: `smooth` });
+    }
+
+    function switchDemoRole(mode) {
+      if (mode === `guest`) {
+        appState.currentUser = null;
+        navigateTo(`landing`);
+        showToast(`Modo Visitante ativo.`);
+      } else if (mode === `student-paid`) {
+        appState.currentUser = { role: `student`, id: `stu-mariana`, name: `Mariana Costa` };
+        navigateTo(`student`);
+        showToast(`Conectado como Mariana Costa (Assinatura Ativa).`);
+      } else if (mode === `student-unpaid`) {
+        appState.currentUser = { role: `student`, id: `stu-lucas`, name: `Lucas Ferreira` };
+        navigateTo(`catalog`);
+        showToast(`Conectado como Lucas Ferreira (Assinatura Pendente — selecione uma turma para testar o bloqueio).`);
+      } else if (mode === `teacher`) {
+        appState.currentUser = { role: `teacher`, id: `tut-ricardo`, name: `Prof. Ricardo Mendes` };
+        navigateTo(`teacher`);
+        showToast(`Conectado como Prof. Ricardo Mendes.`);
+      } else if (mode === `admin`) {
+        appState.currentUser = { role: `admin`, id: `admin-1`, name: `Coordenação músicaEAD` };
+        navigateTo(`admin`);
+        showToast(`Conectado no Painel Administrativo.`);
+      }
+    }
+
+    function logoutUser() {
+      appState.currentUser = null;
+      appState.pendingEnrollClassId = null;
+      navigateTo(`landing`);
+      showToast(`Você saiu da sua conta.`);
+    }
+
+    function renderHeader() {
+      const cluster = byId(`header-auth-cluster`);
+      const wsBtn = byId(`nav-workspace-btn`);
+      if (!cluster) return;
+
+      // Update active nav highlight
+      document.querySelectorAll(`.nav-btn`).forEach(function (btn) {
+        btn.classList.remove(`active`);
+      });
+      if (appState.currentView === `landing`) {
+        const b = document.querySelector(`[data-nav="landing"]`);
+        if (b) b.classList.add(`active`);
+      } else if (appState.currentView === `catalog`) {
+        const b = document.querySelector(`[data-nav="catalog"]`);
+        if (b) b.classList.add(`active`);
+      } else if (appState.currentView === `auth` && appState.activeAuthTab === `apply`) {
+        const b = document.querySelector(`[data-nav="tutor-apply"]`);
+        if (b) b.classList.add(`active`);
+      } else if ([`student`, `teacher`, `admin`, `classroom`].indexOf(appState.currentView) !== -1) {
+        if (wsBtn) wsBtn.classList.add(`active`);
+      }
+
+      // Role bar active highlight
+      const roleBtns = [`guest`, `student-paid`, `student-unpaid`, `teacher`, `admin`];
+      roleBtns.forEach(function (r) {
+        const el = byId(`role-btn-` + r);
+        if (el) el.classList.remove(`active`);
+      });
+      if (!appState.currentUser) {
+        const el = byId(`role-btn-guest`);
+        if (el) el.classList.add(`active`);
+      } else if (appState.currentUser.role === `student`) {
+        const stu = getCurrentStudent();
+        const key = stu && stu.paid ? `student-paid` : `student-unpaid`;
+        const el = byId(`role-btn-` + key);
+        if (el) el.classList.add(`active`);
+      } else if (appState.currentUser.role === `teacher`) {
+        const el = byId(`role-btn-teacher`);
+        if (el) el.classList.add(`active`);
+      } else if (appState.currentUser.role === `admin`) {
+        const el = byId(`role-btn-admin`);
+        if (el) el.classList.add(`active`);
+      }
+
+      if (!appState.currentUser) {
+        if (wsBtn) wsBtn.classList.add(`hidden`);
+        cluster.innerHTML = `
+          <button type="button" class="link-more" onclick="openAuthTab('teacher-login')">Login do Tutor/Professor</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openAuthTab('login')">Entrar</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAuthTab('signup')">Crie sua conta</button>
+        `;
+      } else {
+        if (wsBtn) {
+          wsBtn.classList.remove(`hidden`);
+          wsBtn.textContent = appState.currentUser.role === `student`
+            ? `Painel do Aluno`
+            : appState.currentUser.role === `teacher`
+              ? `Painel do Tutor`
+              : `Painel Admin`;
+        }
+        let statusChip = ``;
+        if (appState.currentUser.role === `student`) {
+          const s = getCurrentStudent();
+          statusChip = s && s.paid
+            ? `<span class="chip chip-green">Assinatura Ativa</span>`
+            : `<span class="chip chip-warning">Pagamento Pendente</span>`;
+        } else if (appState.currentUser.role === `teacher`) {
+          statusChip = `<span class="chip chip-blue">Tutor Ativo</span>`;
+        } else {
+          statusChip = `<span class="chip chip-neutral">Admin</span>`;
+        }
+        cluster.innerHTML = `
+          ${statusChip}
+          <span style="font-size:0.875rem;font-weight:500;">${escapeHtml(appState.currentUser.name)}</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="logoutUser()">Sair</button>
+        `;
+      }
+    }
+
+    /* ==================== LANDING ==================== */
+    function renderLanding() {
+      const grid = byId(`landing-instruments-grid`);
+      if (!grid) return;
+
+      const instruments = [
+        {
+          name: `Violão`,
+          desc: `Turmas de Violão Iniciante, Intermediário e Avançado: batidas, pestanas, dedilhado e improvisação.`,
+          levels: [`Iniciante`, `Intermediário`, `Avançado`]
+        },
+        {
+          name: `Teclado`,
+          desc: `Leitura musical, formação de acordes, inversões e voicings modernos para tocar qualquer repertório.`,
+          levels: [`Iniciante`, `Intermediário`]
+        },
+        {
+          name: `Bateria`,
+          desc: `Coordenação motora, leitura rítmica, metrônomo e grooves brasileiros e internacionais ao vivo.`,
+          levels: [`Iniciante`, `Avançado`]
+        }
+      ];
+
+      grid.innerHTML = instruments.map(function (inst) {
+        const count = appState.classes.filter(function (c) {
+          return c.status === `published` && c.instrument === inst.name;
+        }).length;
+        const levelBadges = inst.levels.map(function (lv) {
+          return `<span class="chip chip-neutral">${escapeHtml(lv)}</span>`;
+        }).join(``);
+
+        return `
+          <div class="tile tile-clickable stack-md">
+            <div class="row-between">
+              <span class="chip chip-blue">${count} turmas publicadas</span>
+            </div>
+            <div>
+              <h3 class="tile-title" style="font-size:1.375rem;margin-bottom:var(--space-xs);">${escapeHtml(inst.name)}</h3>
+              <p class="muted" style="margin:0;">${escapeHtml(inst.desc)}</p>
+            </div>
+            <div class="row-wrap">${levelBadges}</div>
+            <div style="margin-top:auto;">
+              <button type="button" class="link-more with-chevron" onclick="filterCatalogByInstrument('${escapeHtml(inst.name)}')">Ver turmas de ${escapeHtml(inst.name)}</button>
+            </div>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function filterCatalogByInstrument(instrument) {
+      const sel = byId(`filter-instrument`);
+      if (sel) sel.value = instrument;
+      navigateTo(`catalog`);
+    }
+
+    function startSubscriptionFlow() {
+      const stu = getCurrentStudent();
+      if (!stu) {
+        openAuthTab(`signup`);
+        showToast(`Crie sua conta ou faça login para ativar a assinatura de R$ 149/mês.`);
+        return;
+      }
+      if (!stu.paid) {
+        appState.pendingEnrollClassId = appState.classes[0] ? appState.classes[0].id : null;
+        navigateTo(`checkout`);
+        return;
+      }
+      navigateTo(`catalog`);
+    }
+
+    /* ==================== CATALOG ==================== */
+    function renderCatalog() {
+      const grid = byId(`catalog-grid`);
+      const banner = byId(`catalog-status-banner`);
+      if (!grid) return;
+
+      const stu = getCurrentStudent();
+      if (banner) {
+        if (stu && !stu.paid) {
+          banner.className = `notice notice-warning`;
+          banner.innerHTML = `
+            <div>
+              <strong>Assinatura de R$ 149/mês pendente.</strong>
+              <span> Ao selecionar qualquer turma abaixo, você será redirecionado para a tela de pagamento e liberação de matrícula.</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="startSubscriptionFlow()">Ir para pagamento</button>
+          `;
+        } else if (stu && stu.paid) {
+          banner.className = `notice notice-green`;
+          banner.innerHTML = `
+            <div>
+              <strong>Assinatura ativa!</strong>
+              <span> Você pode se matricular diretamente nas turmas com vagas abertas.</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="navigateTo('student')">Ver meus cursos ativos</button>
+          `;
+        } else {
+          banner.className = `hidden`;
+          banner.innerHTML = ``;
+        }
+      }
+
+      const fInst = byId(`filter-instrument`) ? byId(`filter-instrument`).value : `all`;
+      const fLevel = byId(`filter-level`) ? byId(`filter-level`).value : `all`;
+      const fPeriod = byId(`filter-period`) ? byId(`filter-period`).value : `all`;
+      const fSearch = (byId(`filter-search`) ? byId(`filter-search`).value : ``).trim().toLowerCase();
+
+      const filtered = appState.classes.filter(function (c) {
+        if (c.status !== `published`) return false;
+        if (fInst !== `all` && c.instrument !== fInst) return false;
+        if (fLevel !== `all` && c.level !== fLevel) return false;
+        if (fPeriod !== `all` && c.period !== fPeriod) return false;
+        if (fSearch) {
+          const tutor = getTutorById(c.tutorId);
+          const hay = (c.title + ` ` + c.instrument + ` ` + c.level + ` ` + c.period + ` ` + (tutor ? tutor.name : ``)).toLowerCase();
+          if (hay.indexOf(fSearch) === -1) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="tile stack-sm" style="grid-column:1 / -1;text-align:center;">
+            <h3 class="tile-title">Nenhuma turma encontrada para esses filtros</h3>
+            <p class="muted" style="margin:0;">Limpe um dos filtros acima para visualizar todas as turmas publicadas.</p>
+            <div><button type="button" class="btn btn-secondary btn-sm" onclick="resetCatalogFilters()">Limpar filtros</button></div>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(function (c) {
+        const tutor = getTutorById(c.tutorId);
+        const vac = getVacancyStatus(c);
+        const pct = Math.min(100, Math.round((c.enrolledCount / c.maxSpots) * 100));
+        const isEnrolled = stu && stu.enrolledClassIds.indexOf(c.id) !== -1;
+        const onWaitlist = stu && stu.waitlistClassIds.indexOf(c.id) !== -1;
+
+        let actionHtml = ``;
+        if (isEnrolled) {
+          actionHtml = `<button type="button" class="btn btn-secondary" onclick="navigateTo('student')">Matriculado — Acessar curso</button>`;
+        } else if (vac.remaining === 0) {
+          actionHtml = onWaitlist
+            ? `<button type="button" class="btn btn-secondary" disabled>Na lista de espera</button>`
+            : `<button type="button" class="btn btn-secondary" onclick="joinWaitlist('${c.id}')">Entrar na lista de espera</button>`;
+        } else {
+          actionHtml = `<button type="button" class="btn btn-primary" onclick="enrollInClass('${c.id}')">Matricular-se nesta turma</button>`;
+        }
+
+        return `
+          <article class="tile tile-clickable stack-md">
+            <div class="row-between">
+              <div class="row-wrap">
+                <span class="chip chip-blue">${escapeHtml(c.instrument)}</span>
+                <span class="chip chip-neutral">${escapeHtml(c.level)}</span>
+              </div>
+              <span class="chip ${vac.chipClass}">${vac.label}</span>
+            </div>
+
+            <div class="stack-xs">
+              <h3 class="tile-title">${escapeHtml(c.title)}</h3>
+              <p class="muted" style="margin:0;font-size:0.875rem;">${escapeHtml(c.summary)}</p>
+            </div>
+
+            <div class="stack-xs" style="font-size:0.875rem;">
+              <div class="row-wrap">
+                <i data-lucide="user" style="width:15px;height:15px;color:var(--on-surface-variant);" aria-hidden="true"></i>
+                <span>${escapeHtml(tutor ? tutor.name : `Tutor designado`)}</span>
+              </div>
+              <div class="row-wrap">
+                <i data-lucide="clock" style="width:15px;height:15px;color:var(--on-surface-variant);" aria-hidden="true"></i>
+                <span>${escapeHtml(c.period)} • ${escapeHtml(c.schedule)}</span>
+              </div>
+            </div>
+
+            <div class="stack-xs" style="margin-top:auto;">
+              <div class="row-between" style="font-size:0.8125rem;">
+                <span class="muted">Vagas em tempo real</span>
+                <strong>${vac.remaining} de ${c.maxSpots} disponíveis</strong>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill ${vac.barClass}" style="width:${pct}%;"></div>
+              </div>
+            </div>
+
+            ${actionHtml}
+          </article>
+        `;
+      }).join(``);
+      refreshIcons();
+    }
+
+    function resetCatalogFilters() {
+      if (byId(`filter-instrument`)) byId(`filter-instrument`).value = `all`;
+      if (byId(`filter-level`)) byId(`filter-level`).value = `all`;
+      if (byId(`filter-period`)) byId(`filter-period`).value = `all`;
+      if (byId(`filter-search`)) byId(`filter-search`).value = ``;
+      renderCatalog();
+    }
+
+    function enrollInClass(classId) {
+      const cls = getClassById(classId);
+      if (!cls) return;
+
+      // Not logged in or not a student -> prompt login/signup while remembering selected class
+      if (!appState.currentUser || appState.currentUser.role !== `student`) {
+        appState.pendingEnrollClassId = classId;
+        openAuthTab(`login`);
+        showToast(`Entre com sua conta de aluno ou cadastre-se para concluir a matrícula.`);
+        return;
+      }
+
+      const stu = getCurrentStudent();
+      if (!stu) return;
+
+      if (stu.enrolledClassIds.indexOf(classId) !== -1) {
+        navigateTo(`student`);
+        return;
+      }
+
+      // Enforce payment rule: unpaid student is redirected to checkout!
+      if (!stu.paid) {
+        appState.pendingEnrollClassId = classId;
+        navigateTo(`checkout`);
+        showToast(`Assinatura pendente: conclua o pagamento de R$ 149/mês para liberar sua matrícula.`);
+        return;
+      }
+
+      if (cls.enrolledCount >= cls.maxSpots) {
+        showToast(`Esta turma acabou de lotar.`);
+        renderCatalog();
+        return;
+      }
+
+      cls.enrolledCount += 1;
+      stu.enrolledClassIds.push(classId);
+      saveState();
+      showToast(`Matrícula confirmada em "${cls.title}"! Vagas atualizadas.`);
+      navigateTo(`student`);
+    }
+
+    function joinWaitlist(classId) {
+      const stu = getCurrentStudent();
+      if (!stu) {
+        openAuthTab(`login`);
+        showToast(`Entre como aluno para entrar na lista de espera.`);
+        return;
+      }
+      if (stu.waitlistClassIds.indexOf(classId) === -1) {
+        stu.waitlistClassIds.push(classId);
+        saveState();
+      }
+      showToast(`Você entrou na lista de espera. Avisaremos assim que abrir uma vaga.`);
+      renderCatalog();
+    }
+
+    /* ==================== AUTH & APPLICATIONS ==================== */
+    function renderAuthTabs() {
+      const tabs = [`login`, `signup`, `teacher-login`, `apply`, `admin-login`];
+      tabs.forEach(function (t) {
+        const btn = byId(`auth-tab-` + t);
+        const panel = byId(`auth-panel-` + t);
+        if (btn) btn.classList.toggle(`active`, appState.activeAuthTab === t);
+        if (panel) panel.classList.toggle(`hidden`, appState.activeAuthTab !== t);
+      });
+
+      const quickList = byId(`teacher-quick-list`);
+      if (quickList) {
+        quickList.innerHTML = appState.tutors.map(function (t) {
+          const badge = t.status === `active` ? `Ativo` : t.status === `pending` ? `Pendente` : `Recusado`;
+          return `<button type="button" class="btn btn-secondary btn-sm" onclick="quickTutorLogin('${t.id}')">${escapeHtml(t.name)} (${badge})</button>`;
+        }).join(``);
+      }
+    }
+
+    function toggle2FAField(who) {
+      const cb = byId(`login-` + who + `-2fa`);
+      const box = byId(who + `-2fa-box`);
+      if (cb && box) box.classList.toggle(`hidden`, !cb.checked);
+    }
+
+    function toggleForgotBox() {
+      const box = byId(`forgot-box`);
+      if (box) box.classList.toggle(`hidden`);
+    }
+
+    function sendRecoveryEmail() {
+      const emailEl = byId(`forgot-email`);
+      const msgEl = byId(`student-login-msg`);
+      if (!msgEl) return;
+      const mail = emailEl ? emailEl.value.trim() : ``;
+      msgEl.innerHTML = `<div class="notice notice-blue"><span>Enviamos as instruções de redefinição de senha para <strong>${escapeHtml(mail || `seu e-mail`)}</strong>.</span></div>`;
+    }
+
+    function handleStudentLogin(e) {
+      e.preventDefault();
+      const email = (byId(`login-student-email`) ? byId(`login-student-email`).value : ``).trim().toLowerCase();
+      const use2fa = byId(`login-student-2fa`) && byId(`login-student-2fa`).checked;
+      const code = byId(`login-student-code`) ? byId(`login-student-code`).value.trim() : ``;
+      const msg = byId(`student-login-msg`);
+
+      if (use2fa && code.length !== 6) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Informe o código de 6 dígitos da verificação em dois fatores.</span></div>`;
+        return;
+      }
+
+      const found = appState.students.find(function (s) { return s.email.toLowerCase() === email; });
+      if (!found) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Nenhuma conta de aluno encontrada com este e-mail. Use "Crie sua conta" ou entre com uma das contas de teste abaixo.</span></div>`;
+        return;
+      }
+
+      appState.currentUser = { role: `student`, id: found.id, name: found.name };
+      if (msg) msg.innerHTML = ``;
+
+      if (appState.pendingEnrollClassId) {
+        const targetId = appState.pendingEnrollClassId;
+        appState.pendingEnrollClassId = null;
+        enrollInClass(targetId);
+        return;
+      }
+
+      navigateTo(`student`);
+      showToast(`Bem-vindo(a), ${found.name}!`);
+    }
+
+    function socialLogin(which) {
+      const found = which === `mariana` ? getStudentById(`stu-mariana`) : getStudentById(`stu-lucas`);
+      if (!found) return;
+      appState.currentUser = { role: `student`, id: found.id, name: found.name };
+      if (appState.pendingEnrollClassId) {
+        const targetId = appState.pendingEnrollClassId;
+        appState.pendingEnrollClassId = null;
+        enrollInClass(targetId);
+        return;
+      }
+      navigateTo(found.paid ? `student` : `catalog`);
+      showToast(`Autenticação social concluída como ${found.name}.`);
+    }
+
+    function checkMinorRequirement() {
+      const birthEl = byId(`signup-birth`);
+      const box = byId(`minor-guardian-box`);
+      if (!birthEl || !box) return;
+      const age = calculateAge(birthEl.value);
+      box.classList.toggle(`hidden`, age >= 18);
+    }
+
+    function handleStudentSignup(e) {
+      e.preventDefault();
+      const name = (byId(`signup-name`) ? byId(`signup-name`).value : ``).trim();
+      const email = (byId(`signup-email`) ? byId(`signup-email`).value : ``).trim().toLowerCase();
+      const cpf = (byId(`signup-cpf`) ? byId(`signup-cpf`).value : ``).trim();
+      const birth = byId(`signup-birth`) ? byId(`signup-birth`).value : ``;
+      const pass = byId(`signup-pass`) ? byId(`signup-pass`).value : ``;
+      const pass2 = byId(`signup-pass-confirm`) ? byId(`signup-pass-confirm`).value : ``;
+      const msg = byId(`student-signup-msg`);
+
+      if (!name || !email) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Preencha nome e e-mail válidos.</span></div>`;
+        return;
+      }
+      if (!validateCPF(cpf)) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Informe um CPF válido com 11 dígitos numéricos.</span></div>`;
+        return;
+      }
+      if (pass.length < 6 || pass !== pass2) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>As senhas devem coincidir e ter no mínimo 6 caracteres.</span></div>`;
+        return;
+      }
+      const exists = appState.students.some(function (s) { return s.email.toLowerCase() === email; });
+      if (exists) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Este e-mail já está cadastrado. Faça login na aba "Entrar".</span></div>`;
+        return;
+      }
+
+      const age = calculateAge(birth);
+      if (age < 18) {
+        const gName = (byId(`guardian-name`) ? byId(`guardian-name`).value : ``).trim();
+        const gEmail = (byId(`guardian-email`) ? byId(`guardian-email`).value : ``).trim();
+        const gConsent = byId(`guardian-consent`) && byId(`guardian-consent`).checked;
+        if (!gName || !gEmail || !gConsent) {
+          if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Para menores de 18 anos, informe os dados e o consentimento do responsável legal (LGPD).</span></div>`;
+          return;
+        }
+      }
+
+      const newId = `stu-` + Date.now();
+      appState.students.push({
+        id: newId,
+        name: name,
+        email: email,
+        cpf: cpf,
+        birthDate: birth,
+        paid: false,
+        enrolledClassIds: [],
+        waitlistClassIds: []
+      });
+      appState.currentUser = { role: `student`, id: newId, name: name };
+      if (msg) msg.innerHTML = ``;
+      saveState();
+
+      showToast(`Conta criada para ${name}! E-mail de confirmação enviado.`);
+      if (appState.pendingEnrollClassId) {
+        navigateTo(`checkout`);
+      } else {
+        navigateTo(`catalog`);
+      }
+    }
+
+    function handleTeacherLogin(e) {
+      e.preventDefault();
+      const email = (byId(`login-teacher-email`) ? byId(`login-teacher-email`).value : ``).trim().toLowerCase();
+      const found = appState.tutors.find(function (t) { return t.email.toLowerCase() === email; });
+      const msg = byId(`teacher-login-msg`);
+      if (!found) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Tutor não encontrado com este e-mail.</span></div>`;
+        return;
+      }
+      loginTutorObj(found);
+    }
+
+    function quickTutorLogin(tutorId) {
+      const found = getTutorById(tutorId);
+      if (found) loginTutorObj(found);
+    }
+
+    function loginTutorObj(tutor) {
+      const msg = byId(`teacher-login-msg`);
+      if (tutor.status === `pending`) {
+        if (msg) {
+          msg.innerHTML = `<div class="notice notice-warning"><div><strong>Cadastro em análise (${escapeHtml(tutor.name)}).</strong><span> Seu portfólio e formação estão aguardando validação prévia da administração antes da ativação do painel.</span></div></div>`;
+        }
+        return;
+      }
+      if (tutor.status === `rejected`) {
+        if (msg) {
+          msg.innerHTML = `<div class="notice notice-danger"><div><strong>Candidatura não aprovada.</strong><span> Motivo registrado: ${escapeHtml(tutor.rejectReason || `Documentação incompleta.`)}</span></div></div>`;
+        }
+        return;
+      }
+      appState.currentUser = { role: `teacher`, id: tutor.id, name: tutor.name };
+      if (msg) msg.innerHTML = ``;
+      navigateTo(`teacher`);
+      showToast(`Acesso de tutor liberado: ${tutor.name}.`);
+    }
+
+    function handleTeacherApplication(e) {
+      e.preventDefault();
+      const name = (byId(`apply-name`) ? byId(`apply-name`).value : ``).trim();
+      const email = (byId(`apply-email`) ? byId(`apply-email`).value : ``).trim().toLowerCase();
+      const instrument = byId(`apply-instrument`) ? byId(`apply-instrument`).value : `Violão`;
+      const exp = parseInt(byId(`apply-experience`) ? byId(`apply-experience`).value : `3`, 10) || 3;
+      const edu = (byId(`apply-education`) ? byId(`apply-education`).value : ``).trim();
+      const portfolio = (byId(`apply-portfolio`) ? byId(`apply-portfolio`).value : ``).trim();
+      const fileInput = byId(`apply-docs`);
+      const docName = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0].name : `comprovante_formacao.pdf`;
+      const msg = byId(`teacher-apply-msg`);
+
+      if (!name || !email || !edu || !portfolio) {
+        if (msg) msg.innerHTML = `<div class="notice notice-danger"><span>Preencha todos os campos obrigatórios de formação e portfólio.</span></div>`;
+        return;
+      }
+
+      const exists = appState.tutors.some(function (t) { return t.email.toLowerCase() === email; });
+      if (exists) {
+        if (msg) msg.innerHTML = `<div class="notice notice-warning"><span>Já existe uma candidatura ou perfil cadastrado com este e-mail.</span></div>`;
+        return;
+      }
+
+      appState.tutors.unshift({
+        id: `tut-` + Date.now(),
+        name: name,
+        email: email,
+        instruments: [instrument],
+        education: edu,
+        experienceYears: exp,
+        portfolio: portfolio,
+        docsName: docName,
+        status: `pending`,
+        maxActiveClasses: 3,
+        rejectReason: ``
+      });
+      saveState();
+
+      e.target.reset();
+      renderAuthTabs();
+      if (msg) {
+        msg.innerHTML = `<div class="notice notice-green"><div><strong>Candidatura enviada com sucesso!</strong><span> Seu perfil está com status <strong>Pendente</strong> e já aparece na fila de moderação do Painel do Administrador.</span></div></div>`;
+      }
+      showToast(`Candidatura enviada! Avalie e aprove no Painel do Administrador.`);
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      appState.currentUser = { role: `admin`, id: `admin-1`, name: `Coordenação músicaEAD` };
+      navigateTo(`admin`);
+      showToast(`Conectado ao Painel Administrativo.`);
+    }
+
+    /* ==================== CHECKOUT ==================== */
+    function renderCheckout() {
+      const box = byId(`checkout-class-summary`);
+      const fb = byId(`checkout-feedback`);
+      if (!box) return;
+
+      const cls = getClassById(appState.pendingEnrollClassId) || appState.classes[0];
+      if (!cls) return;
+      const tutor = getTutorById(cls.tutorId);
+
+      box.innerHTML = `
+        <div class="row-wrap">
+          <span class="chip chip-blue">${escapeHtml(cls.instrument)}</span>
+          <span class="chip chip-neutral">${escapeHtml(cls.level)}</span>
+        </div>
+        <strong style="font-size:1.0625rem;">${escapeHtml(cls.title)}</strong>
+        <span class="muted" style="font-size:0.875rem;">${escapeHtml(tutor ? tutor.name : ``)} • ${escapeHtml(cls.schedule)}</span>
+      `;
+      if (fb) fb.innerHTML = ``;
+    }
+
+    function selectPaymentMethod(method) {
+      appState.checkoutMethod = method;
+      const cardBtn = byId(`pay-method-card`);
+      const pixBtn = byId(`pay-method-pix`);
+      const cardFields = byId(`pay-card-fields`);
+      const pixFields = byId(`pay-pix-fields`);
+      if (cardBtn) cardBtn.classList.toggle(`active`, method === `card`);
+      if (pixBtn) pixBtn.classList.toggle(`active`, method === `pix`);
+      if (cardFields) cardFields.classList.toggle(`hidden`, method !== `card`);
+      if (pixFields) pixFields.classList.toggle(`hidden`, method !== `pix`);
+    }
+
+    function processCheckout(succeed) {
+      const fb = byId(`checkout-feedback`);
+      const stu = getCurrentStudent();
+      if (!stu) {
+        openAuthTab(`login`);
+        return;
+      }
+
+      if (!succeed) {
+        if (fb) {
+          fb.innerHTML = `
+            <div class="notice notice-danger">
+              <div>
+                <strong>Não foi possível confirmar o pagamento.</strong>
+                <span> A operadora recusou a autorização. Revise os dados do cartão ou tente via PIX Instantâneo para liberar seu acesso.</span>
+              </div>
+            </div>
+          `;
+        }
+        showToast(`Falha simulada no pagamento. Tente novamente.`);
+        return;
+      }
+
+      stu.paid = true;
+      const cls = getClassById(appState.pendingEnrollClassId);
+      if (cls && stu.enrolledClassIds.indexOf(cls.id) === -1 && cls.enrolledCount < cls.maxSpots) {
+        cls.enrolledCount += 1;
+        stu.enrolledClassIds.push(cls.id);
+      }
+      appState.pendingEnrollClassId = null;
+      saveState();
+
+      showToast(`Pagamento de R$ 149,00 confirmado! Acesso às aulas liberado.`);
+      navigateTo(`student`);
+    }
+
+    /* ==================== STUDENT DASHBOARD ==================== */
+    function switchStudentTab(tab) {
+      appState.activeStudentTab = tab;
+      [`courses`, `tasks`, `schedule`].forEach(function (t) {
+        const btn = byId(`student-tab-` + t);
+        const panel = byId(`student-panel-` + t);
+        if (btn) btn.classList.toggle(`active`, tab === t);
+        if (panel) panel.classList.toggle(`hidden`, tab !== t);
+      });
+      renderStudentDashboard();
+    }
+
+    function renderStudentDashboard() {
+      const stu = getCurrentStudent();
+      if (!stu) return;
+
+      const title = byId(`student-welcome-title`);
+      const badgeWrap = byId(`student-sub-badge-wrap`);
+      const unpaidAlert = byId(`student-unpaid-alert`);
+      const kpis = byId(`student-kpis`);
+
+      if (title) title.textContent = `Olá, ${stu.name}`;
+      if (badgeWrap) {
+        badgeWrap.innerHTML = stu.paid
+          ? `<span class="chip chip-green">Assinatura Ativa • R$ 149/mês</span>`
+          : `<span class="chip chip-danger">Assinatura Pendente</span>`;
+      }
+      if (unpaidAlert) {
+        if (!stu.paid) {
+          unpaidAlert.className = `notice notice-warning`;
+          unpaidAlert.innerHTML = `
+            <div>
+              <strong>Acesso bloqueado até a confirmação do pagamento.</strong>
+              <span> Regularize sua assinatura de R$ 149/mês para entrar nas salas ao vivo e assistir ao acervo VOD 24/7.</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="startSubscriptionFlow()">Pagar assinatura agora</button>
+          `;
+        } else {
+          unpaidAlert.className = `hidden`;
+          unpaidAlert.innerHTML = ``;
+        }
+      }
+
+      const enrolledClasses = stu.enrolledClassIds.map(getClassById).filter(Boolean);
+      const myTasks = appState.tasks.filter(function (tk) {
+        return stu.enrolledClassIds.indexOf(tk.classId) !== -1;
+      });
+      const pendingTasksCount = myTasks.filter(function (tk) {
+        return !tk.submissions.some(function (s) { return s.studentId === stu.id; });
+      }).length;
+      const availableVods = appState.vods.filter(function (v) {
+        return stu.enrolledClassIds.indexOf(v.classId) !== -1;
+      }).length;
+
+      if (kpis) {
+        kpis.innerHTML = `
+          <div class="tile figure">
+            <div class="label">Cursos Ativos</div>
+            <div class="value">${enrolledClasses.length}</div>
+            <div class="caption">turmas matriculadas</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Próxima aula ao vivo</div>
+            <div class="value" style="font-size:1.5rem;">${enrolledClasses[0] ? escapeHtml(enrolledClasses[0].nextLive.split(`,`)[0]) : `—`}</div>
+            <div class="caption">${enrolledClasses[0] ? escapeHtml(enrolledClasses[0].nextLive) : `Sem turma ativa`}</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Acervo VOD 24/7</div>
+            <div class="value">${availableVods}</div>
+            <div class="caption">aulas gravadas liberadas</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Tarefas pendentes</div>
+            <div class="value">${pendingTasksCount}</div>
+            <div class="caption">aguardando seu envio</div>
+          </div>
+        `;
+      }
+
+      renderStudentCoursesPanel(stu, enrolledClasses);
+      renderStudentTasksPanel(stu, myTasks);
+      renderStudentSchedulePanel(enrolledClasses);
+      refreshIcons();
+    }
+
+    function renderStudentCoursesPanel(stu, enrolledClasses) {
+      const panel = byId(`student-panel-courses`);
+      if (!panel) return;
+
+      if (!stu.paid) {
+        panel.innerHTML = `
+          <div class="tile stack-md" style="text-align:center;">
+            <h3 class="tile-title">Libere sua assinatura para acessar Cursos Ativos e VODs</h3>
+            <p class="muted" style="margin:0 auto;max-width:52ch;">As aulas gravadas 24/7, partituras e salas ao vivo ficam disponíveis imediatamente após a confirmação da mensalidade de R$ 149/mês.</p>
+            <div><button type="button" class="btn btn-primary" onclick="startSubscriptionFlow()">Regularizar assinatura (R$ 149/mês)</button></div>
+          </div>
+        `;
+        return;
+      }
+
+      if (enrolledClasses.length === 0) {
+        panel.innerHTML = `
+          <div class="tile stack-md" style="text-align:center;">
+            <h3 class="tile-title">Você ainda não está matriculado em nenhuma turma</h3>
+            <p class="muted" style="margin:0 auto;max-width:52ch;">Sua assinatura está ativa! Escolha sua primeira turma de Violão, Teclado ou Bateria no catálogo.</p>
+            <div><button type="button" class="btn btn-primary" onclick="navigateTo('catalog')">Explorar catálogo de turmas</button></div>
+          </div>
+        `;
+        return;
+      }
+
+      panel.innerHTML = enrolledClasses.map(function (c) {
+        const tutor = getTutorById(c.tutorId);
+        const classVods = appState.vods.filter(function (v) { return v.classId === c.id; });
+        const classMats = appState.materials.filter(function (m) { return m.classId === c.id; });
+
+        const vodsHtml = classVods.length === 0
+          ? `<p class="muted" style="margin:0;font-size:0.875rem;">Nenhuma gravação disponível ainda para esta turma.</p>`
+          : classVods.map(function (v) {
+              return `
+                <div class="tile-inset row-between">
+                  <div class="stack-xs">
+                    <span class="muted" style="font-size:0.75rem;font-weight:500;">${escapeHtml(v.module)} • ${escapeHtml(v.recordedAt)}</span>
+                    <strong>${escapeHtml(v.title)}</strong>
+                    <span class="muted" style="font-size:0.8125rem;">Duração: ${escapeHtml(v.duration)}</span>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="openClassroomVod('${c.id}', '${v.id}')">Assistir VOD</button>
+                </div>
+              `;
+            }).join(``);
+
+        const matsHtml = classMats.length === 0
+          ? `<p class="muted" style="margin:0;font-size:0.875rem;">Sem materiais publicados neste módulo.</p>`
+          : classMats.map(function (m) {
+              return `
+                <div class="tile-inset row-between">
+                  <div class="stack-xs">
+                    <span class="chip chip-neutral" style="align-self:flex-start;">${escapeHtml(m.type)}</span>
+                    <strong style="font-size:0.9375rem;">${escapeHtml(m.title)}</strong>
+                    <span class="muted" style="font-size:0.8125rem;">${escapeHtml(m.module)}</span>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="downloadMaterial('${m.id}')">Baixar</button>
+                </div>
+              `;
+            }).join(``);
+
+        return `
+          <div class="tile stack-lg">
+            <div class="row-between">
+              <div class="stack-xs">
+                <div class="row-wrap">
+                  <span class="chip chip-blue">${escapeHtml(c.instrument)} • ${escapeHtml(c.level)}</span>
+                  <span class="chip chip-green">Próxima aula ao vivo: ${escapeHtml(c.nextLive)}</span>
+                </div>
+                <h3 class="tile-title" style="font-size:1.375rem;">${escapeHtml(c.title)}</h3>
+                <span class="muted" style="font-size:0.875rem;">${escapeHtml(tutor ? tutor.name : ``)} • ${escapeHtml(c.schedule)}</span>
+              </div>
+              <button type="button" class="btn btn-primary" onclick="openClassroomLive('${c.id}', false)">Entrar na Aula ao Vivo</button>
+            </div>
+
+            <div class="two-col">
+              <div class="stack-sm">
+                <strong style="font-size:0.9375rem;">Acervo VOD — Aulas Gravadas (24/7)</strong>
+                ${vodsHtml}
+              </div>
+              <div class="stack-sm">
+                <strong style="font-size:0.9375rem;">Materiais Didáticos para Download</strong>
+                ${matsHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function renderStudentTasksPanel(stu, myTasks) {
+      const panel = byId(`student-panel-tasks`);
+      if (!panel) return;
+      if (!stu.paid || myTasks.length === 0) {
+        panel.innerHTML = `<div class="tile"><p class="muted" style="margin:0;">Nenhuma tarefa vinculada às suas turmas no momento.</p></div>`;
+        return;
+      }
+
+      panel.innerHTML = myTasks.map(function (tk) {
+        const cls = getClassById(tk.classId);
+        const sub = tk.submissions.find(function (s) { return s.studentId === stu.id; });
+        let statusChip = `<span class="chip chip-warning">Pendente de envio</span>`;
+        let bodyHtml = `
+          <form class="tile-inset stack-sm" onsubmit="submitStudentTask(event, '${tk.id}')">
+            <div class="form-grid">
+              <div class="field">
+                <label for="task-file-${tk.id}">Anexar arquivo (texto, áudio ou vídeo)</label>
+                <input type="file" id="task-file-${tk.id}" accept=".pdf,.txt,.mp3,.wav,.mp4">
+              </div>
+              <div class="field">
+                <label for="task-note-${tk.id}">Observação para o tutor</label>
+                <input type="text" id="task-note-${tk.id}" placeholder="Descreva sua execução ou dúvida..." required>
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary btn-sm">Enviar tarefa</button>
+            </div>
+          </form>
+        `;
+
+        if (sub && sub.status === `pending`) {
+          statusChip = `<span class="chip chip-blue">Enviada • Aguardando correção</span>`;
+          bodyHtml = `
+            <div class="tile-inset stack-xs">
+              <strong>Sua entrega (${escapeHtml(sub.submittedAt)}): ${escapeHtml(sub.attachmentName)}</strong>
+              <span class="muted" style="font-size:0.875rem;">"${escapeHtml(sub.note)}"</span>
+            </div>
+          `;
+        } else if (sub && sub.status === `graded`) {
+          statusChip = `<span class="chip chip-green">Corrigida • Nota ${escapeHtml(sub.grade)} / 10</span>`;
+          bodyHtml = `
+            <div class="tile-inset stack-sm">
+              <div class="row-between">
+                <strong>Sua entrega: ${escapeHtml(sub.attachmentName)}</strong>
+                <span class="chip chip-green">Nota: ${escapeHtml(sub.grade)}</span>
+              </div>
+              <div style="border-top:1px solid var(--outline-variant);padding-top:var(--space-sm);">
+                <strong style="font-size:0.875rem;">Feedback do Tutor:</strong>
+                <p style="margin:var(--space-xs) 0 0;font-size:0.9375rem;">${escapeHtml(sub.feedback)}</p>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="tile stack-md">
+            <div class="row-between">
+              <div class="stack-xs">
+                <span class="muted" style="font-size:0.8125rem;">${escapeHtml(cls ? cls.title : ``)} • ${escapeHtml(tk.lessonTitle)}</span>
+                <h3 class="tile-title">${escapeHtml(tk.title)}</h3>
+              </div>
+              <div class="row-wrap">
+                <span class="chip chip-neutral">Prazo: ${escapeHtml(tk.dueDate)}</span>
+                ${statusChip}
+              </div>
+            </div>
+            <p class="muted" style="margin:0;">${escapeHtml(tk.description)}</p>
+            ${bodyHtml}
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function renderStudentSchedulePanel(enrolledClasses) {
+      const panel = byId(`student-panel-schedule`);
+      if (!panel) return;
+      if (enrolledClasses.length === 0) {
+        panel.innerHTML = `<div class="tile"><p class="muted" style="margin:0;">Matricule-se em uma turma para visualizar sua agenda semanal de 3 aulas ao vivo.</p></div>`;
+        return;
+      }
+      panel.innerHTML = `
+        <div class="tile stack-md">
+          <h3 class="tile-title">Sua agenda semanal (3 aulas por turma)</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Turma</th>
+                  <th>Instrumento / Nível</th>
+                  <th>Dias e Horário</th>
+                  <th>Próximo encontro</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${enrolledClasses.map(function (c) {
+                  return `
+                    <tr>
+                      <td><strong>${escapeHtml(c.title)}</strong></td>
+                      <td>${escapeHtml(c.instrument)} — ${escapeHtml(c.level)}</td>
+                      <td>${escapeHtml(c.schedule)}</td>
+                      <td>${escapeHtml(c.nextLive)}</td>
+                      <td><button type="button" class="btn btn-primary btn-sm" onclick="openClassroomLive('${c.id}', false)">Ir para sala</button></td>
+                    </tr>
+                  `;
+                }).join(``)}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function submitStudentTask(e, taskId) {
+      e.preventDefault();
+      const stu = getCurrentStudent();
+      if (!stu) return;
+      const tk = appState.tasks.find(function (t) { return t.id === taskId; });
+      if (!tk) return;
+      const fileEl = byId(`task-file-` + taskId);
+      const noteEl = byId(`task-note-` + taskId);
+      const fileName = fileEl && fileEl.files && fileEl.files[0] ? fileEl.files[0].name : `gravacao_exercicio.mp3`;
+      const note = noteEl ? noteEl.value.trim() : ``;
+
+      tk.submissions.push({
+        id: `sub-` + Date.now(),
+        studentId: stu.id,
+        studentName: stu.name,
+        submittedAt: `22/11/2026`,
+        attachmentName: fileName,
+        note: note,
+        status: `pending`,
+        grade: null,
+        feedback: ``
+      });
+      saveState();
+      showToast(`Tarefa enviada com sucesso! O tutor foi notificado para correção.`);
+      renderStudentDashboard();
+    }
+
+    function downloadMaterial(matId) {
+      const mat = appState.materials.find(function (m) { return m.id === matId; });
+      if (!mat) return;
+      const content = `músicaEAD — Material Didático\nMódulo: ${mat.module}\nArquivo: ${mat.title}\nTipo: ${mat.type}\n\nBons estudos práticos!`;
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: mat.title.replace(/\.[^.]+$/, ``) + `_resumo.txt`
+        });
+      }
+      showToast(`Download iniciado: ${mat.title}`);
+    }
+
+    /* ==================== LIVE & VOD CLASSROOM ==================== */
+    function openClassroomLive(classId, asTeacher) {
+      const stu = getCurrentStudent();
+      if (!asTeacher && stu && !stu.paid) {
+        appState.pendingEnrollClassId = classId;
+        navigateTo(`checkout`);
+        showToast(`Regularize o pagamento de R$ 149/mês para acessar a sala ao vivo.`);
+        return;
+      }
+      appState.classroomContext = {
+        mode: `live`,
+        classId: classId,
+        vodId: null,
+        asTeacher: Boolean(asTeacher),
+        preflightDone: false
+      };
+      navigateTo(`classroom`);
+    }
+
+    function openClassroomVod(classId, vodId) {
+      const stu = getCurrentStudent();
+      if (stu && !stu.paid) {
+        appState.pendingEnrollClassId = classId;
+        navigateTo(`checkout`);
+        return;
+      }
+      appState.classroomContext = {
+        mode: `vod`,
+        classId: classId,
+        vodId: vodId,
+        asTeacher: false,
+        preflightDone: true
+      };
+      navigateTo(`classroom`);
+    }
+
+    function renderClassroom() {
+      const ctx = appState.classroomContext;
+      if (!ctx) return;
+      const cls = getClassById(ctx.classId);
+      if (!cls) return;
+      const tutor = getTutorById(cls.tutorId);
+      const vod = ctx.vodId ? appState.vods.find(function (v) { return v.id === ctx.vodId; }) : null;
+
+      const preflight = byId(`classroom-preflight`);
+      const studio = byId(`classroom-studio`);
+      const isLive = ctx.mode === `live`;
+
+      if (byId(`classroom-mode-eyebrow`)) {
+        byId(`classroom-mode-eyebrow`).textContent = isLive
+          ? (ctx.asTeacher ? `Transmissão ao Vivo (Modo Tutor)` : `Transmissão ao Vivo`)
+          : `Acervo VOD 24/7`;
+      }
+      if (byId(`classroom-title`)) {
+        byId(`classroom-title`).textContent = vod ? vod.title : cls.title;
+      }
+      if (byId(`classroom-subtitle`)) {
+        byId(`classroom-subtitle`).textContent = `${cls.instrument} • ${cls.level} • ${tutor ? tutor.name : ``}`;
+      }
+      if (byId(`stage-teacher-badge`)) {
+        byId(`stage-teacher-badge`).textContent = tutor ? tutor.name : `Tutor`;
+      }
+      if (byId(`classroom-notes`)) {
+        byId(`classroom-notes`).textContent = cls.summary;
+      }
+
+      if (isLive && !ctx.preflightDone) {
+        if (preflight) preflight.classList.remove(`hidden`);
+        if (studio) studio.classList.add(`hidden`);
+        startMicMeterAnimation();
+      } else {
+        if (preflight) preflight.classList.add(`hidden`);
+        if (studio) studio.classList.remove(`hidden`);
+      }
+
+      if (byId(`stage-live-pill`)) byId(`stage-live-pill`).classList.toggle(`hidden`, !isLive);
+      if (byId(`stage-rec-pill`)) byId(`stage-rec-pill`).classList.toggle(`hidden`, !isLive);
+      if (byId(`stage-vod-pill`)) byId(`stage-vod-pill`).classList.toggle(`hidden`, isLive);
+      if (byId(`btn-stage-mic`)) byId(`btn-stage-mic`).classList.toggle(`hidden`, !isLive);
+      if (byId(`btn-stage-cam`)) byId(`btn-stage-cam`).classList.toggle(`hidden`, !isLive);
+      if (byId(`btn-stage-share`)) byId(`btn-stage-share`).classList.toggle(`hidden`, !(isLive && ctx.asTeacher));
+      if (byId(`btn-end-live-save`)) byId(`btn-end-live-save`).classList.toggle(`hidden`, !(isLive && ctx.asTeacher));
+      if (byId(`stage-screenshare-banner`)) byId(`stage-screenshare-banner`).classList.toggle(`hidden`, !stageScreenShared);
+
+      if (byId(`stage-chord-display`)) {
+        byId(`stage-chord-display`).textContent = vod
+          ? `Revisão: ${vod.chordFocus}`
+          : `Prática ao vivo: ${cls.instrument} (${cls.level})`;
+      }
+
+      renderRoomChat(cls.id);
+      renderRoomMaterials(cls.id);
+      refreshIcons();
+    }
+
+    function startMicMeterAnimation() {
+      if (micAnimTimer) clearInterval(micAnimTimer);
+      micAnimTimer = setInterval(function () {
+        const meter = byId(`preflight-mic-meter`);
+        if (!meter) return;
+        meter.style.width = preflightMicOn ? `${35 + Math.round(Math.random() * 55)}%` : `0%`;
+      }, 280);
+    }
+
+    function togglePreflightDevice(kind) {
+      if (kind === `cam`) {
+        preflightCamOn = !preflightCamOn;
+        if (byId(`preflight-cam-status`)) byId(`preflight-cam-status`).textContent = preflightCamOn ? `Ativada` : `Desligada`;
+        if (byId(`preflight-cam-preview`)) byId(`preflight-cam-preview`).textContent = preflightCamOn ? `Pré-visualização HD pronta` : `Câmera desligada`;
+      } else {
+        preflightMicOn = !preflightMicOn;
+        if (byId(`preflight-mic-status`)) byId(`preflight-mic-status`).textContent = preflightMicOn ? `Captando` : `Silenciado`;
+      }
+    }
+
+    function playTestTone() {
+      try {
+        const AudioContextCls = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextCls) return;
+        if (!audioCtx) audioCtx = new AudioContextCls();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = `sine`;
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.55);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.55);
+        showToast(`Tom de referência (Lá 440 Hz) reproduzido.`);
+      } catch (e) {
+        showToast(`Teste de áudio concluído.`);
+      }
+    }
+
+    function confirmEnterLiveRoom() {
+      if (!appState.classroomContext) return;
+      appState.classroomContext.preflightDone = true;
+      stageMicOn = preflightMicOn;
+      stageCamOn = preflightCamOn;
+      if (micAnimTimer) {
+        clearInterval(micAnimTimer);
+        micAnimTimer = null;
+      }
+      renderClassroom();
+      showToast(`Você entrou na sala ao vivo!`);
+    }
+
+    function toggleStageControl(kind) {
+      if (kind === `mic`) {
+        stageMicOn = !stageMicOn;
+        const btn = byId(`btn-stage-mic`);
+        if (btn) btn.textContent = stageMicOn ? `Microfone: Ligado` : `Microfone: Mudo`;
+      } else {
+        stageCamOn = !stageCamOn;
+        const btn = byId(`btn-stage-cam`);
+        if (btn) btn.textContent = stageCamOn ? `Câmera: Ligada` : `Câmera: Desligada`;
+      }
+    }
+
+    function toggleScreenShare() {
+      stageScreenShared = !stageScreenShared;
+      const banner = byId(`stage-screenshare-banner`);
+      const btn = byId(`btn-stage-share`);
+      if (banner) banner.classList.toggle(`hidden`, !stageScreenShared);
+      if (btn) btn.textContent = stageScreenShared ? `Parar compartilhamento` : `Compartilhar tela`;
+      showToast(stageScreenShared ? `Compartilhamento de tela iniciado para partituras.` : `Compartilhamento encerrado.`);
+    }
+
+    function toggleAudioPlayback() {
+      if (isAudioPlaying) {
+        stopAudioPlayback();
+      } else {
+        startAudioPlayback();
+      }
+    }
+
+    function startAudioPlayback() {
+      isAudioPlaying = true;
+      const lbl = byId(`btn-stage-audio-label`);
+      if (lbl) lbl.textContent = `Pausar demonstração`;
+
+      const notes = [261.63, 329.63, 392.0, 440.0, 392.0, 329.63];
+      let step = 0;
+
+      function tick() {
+        const bars = document.querySelectorAll(`#stage-wave-bars .wave-bar`);
+        bars.forEach(function (bar) {
+          bar.style.height = `${10 + Math.round(Math.random() * 28)}px`;
+        });
+        try {
+          const AudioContextCls = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextCls) {
+            if (!audioCtx) audioCtx = new AudioContextCls();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = `triangle`;
+            osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.36);
+          }
+        } catch (e) {
+          // Visual wave continues even if audio blocked
+        }
+        step += 1;
+      }
+
+      tick();
+      audioInterval = setInterval(tick, 420);
+    }
+
+    function stopAudioPlayback() {
+      isAudioPlaying = false;
+      if (audioInterval) {
+        clearInterval(audioInterval);
+        audioInterval = null;
+      }
+      const lbl = byId(`btn-stage-audio-label`);
+      if (lbl) lbl.textContent = `Ouvir demonstração musical`;
+      document.querySelectorAll(`#stage-wave-bars .wave-bar`).forEach(function (bar) {
+        bar.style.height = `12px`;
+      });
+    }
+
+    function endLiveAndSaveVod() {
+      const ctx = appState.classroomContext;
+      if (!ctx) return;
+      const cls = getClassById(ctx.classId);
+      if (!cls) return;
+      const count = appState.vods.filter(function (v) { return v.classId === cls.id; }).length + 1;
+      appState.vods.unshift({
+        id: `vod-` + Date.now(),
+        classId: cls.id,
+        module: `Gravação Automática ao Vivo`,
+        title: `Aula ao vivo #0${count} — ${cls.instrument} (${cls.level})`,
+        duration: `54 min`,
+        recordedAt: `22/11/2026`,
+        chordFocus: `Sessão gravada pelo Tutor`
+      });
+      stageScreenShared = false;
+      saveState();
+      showToast(`Aula encerrada! Gravação salva automaticamente no acervo VOD 24/7.`);
+      navigateTo(`teacher`);
+    }
+
+    function exitClassroom() {
+      stopAudioPlayback();
+      stageScreenShared = false;
+      if (appState.currentUser && appState.currentUser.role === `teacher`) navigateTo(`teacher`);
+      else if (appState.currentUser && appState.currentUser.role === `student`) navigateTo(`student`);
+      else navigateTo(`catalog`);
+    }
+
+    function switchRoomSideTab(tab) {
+      const chatBtn = byId(`room-tab-chat`);
+      const matBtn = byId(`room-tab-materials`);
+      const chatPanel = byId(`room-panel-chat`);
+      const matPanel = byId(`room-panel-materials`);
+      if (chatBtn) chatBtn.classList.toggle(`active`, tab === `chat`);
+      if (matBtn) matBtn.classList.toggle(`active`, tab === `materials`);
+      if (chatPanel) chatPanel.classList.toggle(`hidden`, tab !== `chat`);
+      if (matPanel) matPanel.classList.toggle(`hidden`, tab !== `materials`);
+    }
+
+    function renderRoomChat(classId) {
+      const list = byId(`room-chat-list`);
+      if (!list) return;
+      const msgs = appState.chatMessages.filter(function (m) { return m.classId === classId; });
+      if (msgs.length === 0) {
+        list.innerHTML = `<p class="muted" style="margin:0;font-size:0.875rem;">Nenhuma mensagem nesta sala ainda. Dê um olá para a turma!</p>`;
+        return;
+      }
+      list.innerHTML = msgs.map(function (m) {
+        return `
+          <div class="chat-msg">
+            <div class="chat-msg-head">
+              <span class="chat-msg-author">${escapeHtml(m.author)}</span>
+              <span class="chat-msg-time">${escapeHtml(m.time)}</span>
+            </div>
+            <div style="font-size:0.875rem;">${escapeHtml(m.text)}</div>
+          </div>
+        `;
+      }).join(``);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    function sendChatMessage(e) {
+      e.preventDefault();
+      const ctx = appState.classroomContext;
+      const input = byId(`room-chat-input`);
+      if (!ctx || !input) return;
+      const text = input.value.trim();
+      if (!text) return;
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, `0`);
+      const mm = String(now.getMinutes()).padStart(2, `0`);
+      appState.chatMessages.push({
+        id: `msg-` + Date.now(),
+        classId: ctx.classId,
+        author: appState.currentUser ? appState.currentUser.name : `Participante`,
+        time: `${hh}:${mm}`,
+        text: text
+      });
+      input.value = ``;
+      saveState();
+      renderRoomChat(ctx.classId);
+    }
+
+    function renderRoomMaterials(classId) {
+      const list = byId(`room-materials-list`);
+      if (!list) return;
+      const mats = appState.materials.filter(function (m) { return m.classId === classId; });
+      if (mats.length === 0) {
+        list.innerHTML = `<p class="muted" style="margin:0;font-size:0.875rem;">Nenhum material complementar cadastrado.</p>`;
+        return;
+      }
+      list.innerHTML = mats.map(function (m) {
+        return `
+          <div class="tile-inset row-between">
+            <div class="stack-xs">
+              <span class="chip chip-neutral" style="align-self:flex-start;">${escapeHtml(m.type)}</span>
+              <strong style="font-size:0.875rem;">${escapeHtml(m.title)}</strong>
+              <span class="muted" style="font-size:0.75rem;">${escapeHtml(m.module)}</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="downloadMaterial('${m.id}')">Baixar</button>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    /* ==================== TEACHER DASHBOARD ==================== */
+    function switchTeacherTab(tab) {
+      appState.activeTeacherTab = tab;
+      [`live`, `courses`, `grading`, `drafts`].forEach(function (t) {
+        const btn = byId(`teacher-tab-` + t);
+        const panel = byId(`teacher-panel-` + t);
+        if (btn) btn.classList.toggle(`active`, tab === t);
+        if (panel) panel.classList.toggle(`hidden`, tab !== t);
+      });
+      renderTeacherDashboard();
+    }
+
+    function renderTeacherDashboard() {
+      const tutor = getCurrentTutor();
+      if (!tutor) return;
+
+      const myClasses = appState.classes.filter(function (c) { return c.tutorId === tutor.id && c.status === `published`; });
+      const myClassIds = myClasses.map(function (c) { return c.id; });
+      const totalStudents = myClasses.reduce(function (acc, c) { return acc + c.enrolledCount; }, 0);
+      const pendingSubs = countPendingSubmissionsForTutor(myClassIds);
+      const openRequests = appState.adminRequests.filter(function (r) { return r.tutorId === tutor.id && r.status === `open`; }).length;
+
+      if (byId(`teacher-welcome-title`)) byId(`teacher-welcome-title`).textContent = tutor.name;
+      if (byId(`teacher-instruments-badges`)) {
+        byId(`teacher-instruments-badges`).innerHTML = tutor.instruments.map(function (i) {
+          return `<span class="chip chip-blue">${escapeHtml(i)}</span>`;
+        }).join(``) + `<span class="chip chip-neutral">Limite de turmas ativas: ${myClasses.length}/${tutor.maxActiveClasses}</span>`;
+      }
+
+      if (byId(`teacher-kpis`)) {
+        byId(`teacher-kpis`).innerHTML = `
+          <div class="tile figure">
+            <div class="label">Turmas Ativas</div>
+            <div class="value">${myClasses.length}</div>
+            <div class="caption">publicadas no catálogo</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Total de Alunos</div>
+            <div class="value">${totalStudents}</div>
+            <div class="caption">matriculados nas suas turmas</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Correções Pendentes</div>
+            <div class="value">${pendingSubs}</div>
+            <div class="caption">entregas aguardando nota</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Solicitações do Admin</div>
+            <div class="value">${openRequests}</div>
+            <div class="caption">novos pedidos recebidos</div>
+          </div>
+        `;
+      }
+
+      renderTeacherLivePanel(myClasses);
+      renderTeacherCoursesPanel(myClasses);
+      renderTeacherGradingPanel(myClassIds);
+      renderTeacherDraftsPanel(tutor);
+      refreshIcons();
+    }
+
+    function countPendingSubmissionsForTutor(classIds) {
+      let count = 0;
+      appState.tasks.forEach(function (tk) {
+        if (classIds.indexOf(tk.classId) !== -1) {
+          tk.submissions.forEach(function (s) {
+            if (s.status === `pending`) count += 1;
+          });
+        }
+      });
+      return count;
+    }
+
+    function renderTeacherLivePanel(myClasses) {
+      const panel = byId(`teacher-panel-live`);
+      if (!panel) return;
+      if (myClasses.length === 0) {
+        panel.innerHTML = `<div class="tile"><p class="muted" style="margin:0;">Você ainda não possui turmas publicadas. Crie um rascunho na aba "Notificações & Rascunhos".</p></div>`;
+        return;
+      }
+      panel.innerHTML = `
+        <div class="card-grid">
+          ${myClasses.map(function (c) {
+            return `
+              <div class="tile stack-md">
+                <div class="row-between">
+                  <span class="chip chip-blue">${escapeHtml(c.instrument)} • ${escapeHtml(c.level)}</span>
+                  <span class="chip chip-green">${c.enrolledCount}/${c.maxSpots} alunos</span>
+                </div>
+                <div>
+                  <h3 class="tile-title">${escapeHtml(c.title)}</h3>
+                  <p class="muted" style="margin:var(--space-xs) 0 0;font-size:0.875rem;">Próxima aula: <strong>${escapeHtml(c.nextLive)}</strong> • ${escapeHtml(c.schedule)}</p>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="openClassroomLive('${c.id}', true)">Iniciar Aula ao Vivo (Navegador)</button>
+              </div>
+            `;
+          }).join(``)}
+        </div>
+      `;
+    }
+
+    function renderTeacherCoursesPanel(myClasses) {
+      const panel = byId(`teacher-panel-courses`);
+      if (!panel) return;
+      if (myClasses.length === 0) {
+        panel.innerHTML = `<div class="tile"><p class="muted" style="margin:0;">Nenhuma turma publicada para gerenciar VODs e tarefas.</p></div>`;
+        return;
+      }
+
+      const selectedId = myClasses.some(function (c) { return c.id === appState.selectedTeacherClassId; })
+        ? appState.selectedTeacherClassId
+        : myClasses[0].id;
+      appState.selectedTeacherClassId = selectedId;
+
+      const cls = getClassById(selectedId);
+      const classVods = appState.vods.filter(function (v) { return v.classId === selectedId; });
+      const classMats = appState.materials.filter(function (m) { return m.classId === selectedId; });
+
+      panel.innerHTML = `
+        <div class="tile stack-md">
+          <div class="field" style="max-width:440px;">
+            <label for="teacher-class-select">Selecionar turma para gerenciar aulas e materiais</label>
+            <select id="teacher-class-select" onchange="selectTeacherClass(this.value)">
+              ${myClasses.map(function (c) {
+                return `<option value="${c.id}" ${c.id === selectedId ? `selected` : ``}>${escapeHtml(c.title)} (${escapeHtml(c.level)})</option>`;
+              }).join(``)}
+            </select>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="tile stack-md">
+            <h3 class="tile-title">Histórico de VODs (${classVods.length})</h3>
+            ${classVods.length === 0 ? `<p class="muted" style="margin:0;">Sem gravações VOD registradas.</p>` : classVods.map(function (v) {
+              return `
+                <div class="tile-inset row-between">
+                  <div class="stack-xs">
+                    <span class="muted" style="font-size:0.75rem;">${escapeHtml(v.module)} • ${escapeHtml(v.recordedAt)}</span>
+                    <strong>${escapeHtml(v.title)}</strong>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="openClassroomVod('${cls.id}', '${v.id}')">Reproduzir</button>
+                </div>
+              `;
+            }).join(``)}
+          </div>
+
+          <div class="tile stack-md">
+            <h3 class="tile-title">Materiais Didáticos (${classMats.length})</h3>
+            ${classMats.map(function (m) {
+              return `
+                <div class="tile-inset row-between">
+                  <div class="stack-xs">
+                    <span class="chip chip-neutral" style="align-self:flex-start;">${escapeHtml(m.type)}</span>
+                    <strong style="font-size:0.875rem;">${escapeHtml(m.title)}</strong>
+                    <span class="muted" style="font-size:0.75rem;">${escapeHtml(m.module)}</span>
+                  </div>
+                </div>
+              `;
+            }).join(``)}
+            <form class="tile-inset stack-sm" onsubmit="addTeacherMaterial(event, '${selectedId}')">
+              <strong style="font-size:0.9375rem;">Disponibilizar novo material</strong>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="mat-module">Módulo</label>
+                  <input type="text" id="mat-module" value="Módulo 2 — Prática" required>
+                </div>
+                <div class="field">
+                  <label for="mat-type">Tipo de arquivo</label>
+                  <select id="mat-type">
+                    <option value="PDF / Partitura">PDF / Partitura</option>
+                    <option value="Áudio de Exercício">Áudio de Exercício</option>
+                    <option value="Videoaula">Videoaula</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="mat-title">Nome do material</label>
+                  <input type="text" id="mat-title" placeholder="Ex.: Partitura Arranjo Semanal.pdf" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm">Publicar material no módulo</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="tile stack-md">
+          <h3 class="tile-title">Publicar Nova Tarefa Vinculada a uma Aula</h3>
+          <form class="stack-md" onsubmit="publishTeacherTask(event, '${selectedId}')">
+            <div class="form-grid">
+              <div class="field">
+                <label for="task-lesson">Aula vinculada</label>
+                <select id="task-lesson">
+                  ${classVods.length > 0
+                    ? classVods.map(function (v) { return `<option value="${escapeHtml(v.title)}">${escapeHtml(v.title)}</option>`; }).join(``)
+                    : `<option value="Aula Prática da Semana">Aula Prática da Semana</option>`}
+                </select>
+              </div>
+              <div class="field">
+                <label for="task-due">Prazo de entrega</label>
+                <input type="text" id="task-due" value="30/11/2026" required>
+              </div>
+              <div class="field full">
+                <label for="task-title">Título da tarefa</label>
+                <input type="text" id="task-title" placeholder="Ex.: Enviar vídeo tocando a escala pentatônica" required>
+              </div>
+              <div class="field full">
+                <label for="task-desc">Instruções para o aluno</label>
+                <textarea id="task-desc" placeholder="Detalhe andamento, formato de entrega (texto, áudio ou vídeo) e critérios..." required></textarea>
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Publicar tarefa e notificar turma</button>
+            </div>
+          </form>
+        </div>
+      `;
+    }
+
+    function selectTeacherClass(id) {
+      appState.selectedTeacherClassId = id;
+      renderTeacherDashboard();
+    }
+
+    function addTeacherMaterial(e, classId) {
+      e.preventDefault();
+      const mod = byId(`mat-module`) ? byId(`mat-module`).value.trim() : ``;
+      const type = byId(`mat-type`) ? byId(`mat-type`).value : `PDF / Partitura`;
+      const title = byId(`mat-title`) ? byId(`mat-title`).value.trim() : ``;
+      if (!title) return;
+      appState.materials.unshift({
+        id: `mat-` + Date.now(),
+        classId: classId,
+        module: mod || `Módulo Geral`,
+        type: type,
+        title: title
+      });
+      saveState();
+      showToast(`Material "${title}" publicado para os alunos da turma!`);
+      renderTeacherDashboard();
+    }
+
+    function publishTeacherTask(e, classId) {
+      e.preventDefault();
+      const lesson = byId(`task-lesson`) ? byId(`task-lesson`).value : `Aula Prática`;
+      const due = byId(`task-due`) ? byId(`task-due`).value.trim() : `30/11/2026`;
+      const title = byId(`task-title`) ? byId(`task-title`).value.trim() : ``;
+      const desc = byId(`task-desc`) ? byId(`task-desc`).value.trim() : ``;
+      if (!title || !desc) return;
+      appState.tasks.unshift({
+        id: `tsk-` + Date.now(),
+        classId: classId,
+        lessonTitle: lesson,
+        title: title,
+        description: desc,
+        dueDate: due,
+        submissions: []
+      });
+      saveState();
+      showToast(`Tarefa "${title}" publicada e visível no painel dos alunos!`);
+      renderTeacherDashboard();
+    }
+
+    function renderTeacherGradingPanel(myClassIds) {
+      const panel = byId(`teacher-panel-grading`);
+      if (!panel) return;
+      const items = [];
+      appState.tasks.forEach(function (tk) {
+        if (myClassIds.indexOf(tk.classId) !== -1) {
+          const cls = getClassById(tk.classId);
+          tk.submissions.forEach(function (sub) {
+            items.push({ task: tk, cls: cls, sub: sub });
+          });
+        }
+      });
+
+      const pending = items.filter(function (i) { return i.sub.status === `pending`; });
+      const graded = items.filter(function (i) { return i.sub.status === `graded`; });
+
+      panel.innerHTML = `
+        <div class="stack-md">
+          <h3 class="tile-title">Tarefas Pendentes de Correção (${pending.length})</h3>
+          ${pending.length === 0 ? `<div class="tile"><p class="muted" style="margin:0;">Todas as entregas recebidas já foram corrigidas.</p></div>` : pending.map(function (item) {
+            return `
+              <div class="tile stack-md">
+                <div class="row-between">
+                  <div class="stack-xs">
+                    <span class="chip chip-warning" style="align-self:flex-start;">Aguardando correção</span>
+                    <strong>${escapeHtml(item.sub.studentName)} — ${escapeHtml(item.task.title)}</strong>
+                    <span class="muted" style="font-size:0.8125rem;">${escapeHtml(item.cls ? item.cls.title : ``)} • Enviado em ${escapeHtml(item.sub.submittedAt)}</span>
+                  </div>
+                  <span class="chip chip-neutral">${escapeHtml(item.sub.attachmentName)}</span>
+                </div>
+                <div class="tile-inset">
+                  <span class="muted" style="font-size:0.8125rem;">Comentário do aluno:</span>
+                  <p style="margin:var(--space-xs) 0 0;">"${escapeHtml(item.sub.note)}"</p>
+                </div>
+                <form class="stack-sm" onsubmit="gradeSubmission(event, '${item.task.id}', '${item.sub.id}')">
+                  <div class="form-grid">
+                    <div class="field" style="max-width:160px;">
+                      <label for="grade-val-${item.sub.id}">Nota (0 a 10)</label>
+                      <input type="number" id="grade-val-${item.sub.id}" min="0" max="10" step="0.5" value="9.0" required>
+                    </div>
+                    <div class="field">
+                      <label for="grade-fb-${item.sub.id}">Comentário de orientação ao aluno</label>
+                      <input type="text" id="grade-fb-${item.sub.id}" placeholder="Ex.: Ótima divisão rítmica, ajuste apenas a transição..." required>
+                    </div>
+                  </div>
+                  <div>
+                    <button type="submit" class="btn btn-primary btn-sm">Registrar nota e enviar feedback</button>
+                  </div>
+                </form>
+              </div>
+            `;
+          }).join(``)}
+        </div>
+
+        <div class="stack-md">
+          <h3 class="tile-title">Histórico de Correções Enviadas (${graded.length})</h3>
+          ${graded.length === 0 ? `<div class="tile"><p class="muted" style="margin:0;">Nenhuma tarefa corrigida ainda.</p></div>` : graded.map(function (item) {
+            return `
+              <div class="tile row-between">
+                <div class="stack-xs">
+                  <strong>${escapeHtml(item.sub.studentName)} — ${escapeHtml(item.task.title)}</strong>
+                  <span class="muted" style="font-size:0.875rem;">Feedback: "${escapeHtml(item.sub.feedback)}"</span>
+                </div>
+                <span class="chip chip-green">Nota ${escapeHtml(item.sub.grade)} / 10</span>
+              </div>
+            `;
+          }).join(``)}
+        </div>
+      `;
+    }
+
+    function gradeSubmission(e, taskId, subId) {
+      e.preventDefault();
+      const tk = appState.tasks.find(function (t) { return t.id === taskId; });
+      if (!tk) return;
+      const sub = tk.submissions.find(function (s) { return s.id === subId; });
+      if (!sub) return;
+      const gradeEl = byId(`grade-val-` + subId);
+      const fbEl = byId(`grade-fb-` + subId);
+      sub.grade = gradeEl ? gradeEl.value : `9.0`;
+      sub.feedback = fbEl ? fbEl.value.trim() : ``;
+      sub.status = `graded`;
+      saveState();
+      showToast(`Correção enviada! ${sub.studentName} já pode visualizar a nota ${sub.grade}.`);
+      renderTeacherDashboard();
+    }
+
+    function renderTeacherDraftsPanel(tutor) {
+      const panel = byId(`teacher-panel-drafts`);
+      if (!panel) return;
+      const reqs = appState.adminRequests.filter(function (r) { return r.tutorId === tutor.id; });
+      const drafts = appState.drafts.filter(function (d) { return d.tutorId === tutor.id; });
+      const editing = appState.editingDraftId ? drafts.find(function (d) { return d.id === appState.editingDraftId; }) : null;
+
+      panel.innerHTML = `
+        <div class="stack-md">
+          <h3 class="tile-title">Solicitações Recebidas do Administrador (${reqs.length})</h3>
+          ${reqs.length === 0 ? `<div class="tile"><p class="muted" style="margin:0;">Nenhuma solicitação pendente da administração.</p></div>` : reqs.map(function (r) {
+            return `
+              <div class="tile row-between">
+                <div class="stack-xs">
+                  <div class="row-wrap">
+                    <span class="chip ${r.status === `open` ? `chip-blue` : `chip-green`}">${r.status === `open` ? `Nova solicitação` : `Atendida`}</span>
+                    <span class="muted" style="font-size:0.8125rem;">Recebida em ${escapeHtml(r.createdAt)}</span>
+                  </div>
+                  <strong>${escapeHtml(r.instrument)} • ${escapeHtml(r.level)} • Período: ${escapeHtml(r.period)}</strong>
+                  <p class="muted" style="margin:0;max-width:60ch;">${escapeHtml(r.message)}</p>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" onclick="prefillDraftFromRequest('${r.id}')">Criar rascunho desta solicitação</button>
+              </div>
+            `;
+          }).join(``)}
+        </div>
+
+        <div class="two-col">
+          <div class="tile stack-md">
+            <h3 class="tile-title">${editing ? `Editar Rascunho de Turma` : `Criar Novo Rascunho de Turma`}</h3>
+            <form class="stack-md" onsubmit="saveTeacherDraft(event)">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="draft-instrument">Instrumento</label>
+                  <select id="draft-instrument">
+                    <option value="Violão" ${editing && editing.instrument === `Violão` ? `selected` : ``}>Violão</option>
+                    <option value="Teclado" ${editing && editing.instrument === `Teclado` ? `selected` : ``}>Teclado</option>
+                    <option value="Bateria" ${editing && editing.instrument === `Bateria` ? `selected` : ``}>Bateria</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="draft-level">Nível</label>
+                  <select id="draft-level">
+                    <option value="Iniciante" ${editing && editing.level === `Iniciante` ? `selected` : ``}>Iniciante</option>
+                    <option value="Intermediário" ${editing && editing.level === `Intermediário` ? `selected` : ``}>Intermediário</option>
+                    <option value="Avançado" ${editing && editing.level === `Avançado` ? `selected` : ``}>Avançado</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="draft-period">Período</label>
+                  <select id="draft-period">
+                    <option value="Manhã" ${editing && editing.period === `Manhã` ? `selected` : ``}>Manhã</option>
+                    <option value="Tarde" ${editing && editing.period === `Tarde` ? `selected` : ``}>Tarde</option>
+                    <option value="Noite" ${editing && editing.period === `Noite` ? `selected` : ``}>Noite</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="draft-spots">Limite de vagas (padrão 10)</label>
+                  <input type="number" id="draft-spots" min="4" max="20" value="${editing ? editing.maxSpots : 10}" required>
+                </div>
+                <div class="field full">
+                  <label for="draft-title">Título da turma</label>
+                  <input type="text" id="draft-title" value="${editing ? escapeHtml(editing.title) : ``}" placeholder="Ex.: Teclado Avançado: Harmonia Modal" required>
+                </div>
+                <div class="field full">
+                  <label for="draft-schedule">Grade fixa (3 aulas por semana)</label>
+                  <input type="text" id="draft-schedule" value="${editing ? escapeHtml(editing.schedule) : `Seg, Qua e Sex • 14h00 – 15h00`}" required>
+                </div>
+                <div class="field full">
+                  <label for="draft-summary">Resumo pedagógico</label>
+                  <textarea id="draft-summary" required>${editing ? escapeHtml(editing.summary) : ``}</textarea>
+                </div>
+              </div>
+              <div class="row-wrap">
+                <button type="submit" class="btn btn-secondary" onclick="setDraftSubmitMode('draft')">Salvar como rascunho</button>
+                <button type="submit" class="btn btn-primary" onclick="setDraftSubmitMode('pending_approval')">Enviar para aprovação do Admin</button>
+                ${editing ? `<button type="button" class="link-more" onclick="cancelEditDraft()">Cancelar edição</button>` : ``}
+              </div>
+            </form>
+          </div>
+
+          <div class="tile stack-md">
+            <h3 class="tile-title">Meus Rascunhos de Turmas (${drafts.length})</h3>
+            ${drafts.length === 0 ? `<p class="muted" style="margin:0;">Nenhum rascunho criado ainda.</p>` : drafts.map(function (d) {
+              const chip = d.status === `draft`
+                ? `<span class="chip chip-neutral">Rascunho</span>`
+                : d.status === `pending_approval`
+                  ? `<span class="chip chip-warning">Aguardando aprovação</span>`
+                  : `<span class="chip chip-blue">Ajustes solicitados</span>`;
+              return `
+                <div class="tile-inset stack-sm">
+                  <div class="row-between">
+                    <span class="chip chip-blue">${escapeHtml(d.instrument)} • ${escapeHtml(d.level)}</span>
+                    ${chip}
+                  </div>
+                  <strong>${escapeHtml(d.title)}</strong>
+                  <span class="muted" style="font-size:0.8125rem;">${escapeHtml(d.period)} • ${escapeHtml(d.schedule)} • ${d.maxSpots} vagas</span>
+                  ${d.adminNote ? `<span style="font-size:0.8125rem;color:var(--secondary);">Observação do Admin: ${escapeHtml(d.adminNote)}</span>` : ``}
+                  <div class="row-wrap">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="editDraft('${d.id}')">Editar</button>
+                    ${d.status !== `pending_approval` ? `<button type="button" class="btn btn-primary btn-sm" onclick="submitDraftForApproval('${d.id}')">Enviar para aprovação</button>` : ``}
+                  </div>
+                </div>
+              `;
+            }).join(``)}
+          </div>
+        </div>
+      `;
+    }
+
+    let draftSubmitMode = `draft`;
+    function setDraftSubmitMode(mode) {
+      draftSubmitMode = mode;
+    }
+
+    function prefillDraftFromRequest(reqId) {
+      const req = appState.adminRequests.find(function (r) { return r.id === reqId; });
+      if (!req) return;
+      req.status = `handled`;
+      const newDraft = {
+        id: `drf-` + Date.now(),
+        tutorId: req.tutorId,
+        title: `${req.instrument} ${req.level} — Nova Turma (${req.period})`,
+        instrument: req.instrument,
+        level: req.level,
+        period: req.period,
+        schedule: req.period === `Manhã` ? `Seg, Qua e Sex • 09h00 – 10h00` : req.period === `Tarde` ? `Ter, Qui e Sex • 15h30 – 16h30` : `Seg, Qua e Sex • 20h00 – 21h00`,
+        maxSpots: 10,
+        summary: req.message,
+        status: `draft`,
+        adminNote: ``
+      };
+      appState.drafts.unshift(newDraft);
+      appState.editingDraftId = newDraft.id;
+      saveState();
+      showToast(`Rascunho criado a partir da solicitação! Revise os detalhes e envie para aprovação.`);
+      renderTeacherDashboard();
+    }
+
+    function editDraft(draftId) {
+      appState.editingDraftId = draftId;
+      renderTeacherDashboard();
+    }
+
+    function cancelEditDraft() {
+      appState.editingDraftId = null;
+      renderTeacherDashboard();
+    }
+
+    function saveTeacherDraft(e) {
+      e.preventDefault();
+      const tutor = getCurrentTutor();
+      if (!tutor) return;
+      const instrument = byId(`draft-instrument`) ? byId(`draft-instrument`).value : `Violão`;
+      const level = byId(`draft-level`) ? byId(`draft-level`).value : `Iniciante`;
+      const period = byId(`draft-period`) ? byId(`draft-period`).value : `Noite`;
+      const maxSpots = parseInt(byId(`draft-spots`) ? byId(`draft-spots`).value : `10`, 10) || 10;
+      const title = byId(`draft-title`) ? byId(`draft-title`).value.trim() : ``;
+      const schedule = byId(`draft-schedule`) ? byId(`draft-schedule`).value.trim() : ``;
+      const summary = byId(`draft-summary`) ? byId(`draft-summary`).value.trim() : ``;
+
+      if (!title || !schedule || !summary) return;
+
+      if (appState.editingDraftId) {
+        const d = appState.drafts.find(function (x) { return x.id === appState.editingDraftId; });
+        if (d) {
+          d.instrument = instrument;
+          d.level = level;
+          d.period = period;
+          d.maxSpots = maxSpots;
+          d.title = title;
+          d.schedule = schedule;
+          d.summary = summary;
+          d.status = draftSubmitMode;
+        }
+        appState.editingDraftId = null;
+      } else {
+        appState.drafts.unshift({
+          id: `drf-` + Date.now(),
+          tutorId: tutor.id,
+          title: title,
+          instrument: instrument,
+          level: level,
+          period: period,
+          schedule: schedule,
+          maxSpots: maxSpots,
+          summary: summary,
+          status: draftSubmitMode,
+          adminNote: ``
+        });
+      }
+
+      saveState();
+      showToast(draftSubmitMode === `pending_approval` ? `Rascunho enviado para aprovação do Administrador!` : `Rascunho salvo com sucesso.`);
+      renderTeacherDashboard();
+    }
+
+    function submitDraftForApproval(draftId) {
+      const d = appState.drafts.find(function (x) { return x.id === draftId; });
+      if (!d) return;
+      d.status = `pending_approval`;
+      saveState();
+      showToast(`Rascunho "${d.title}" enviado para revisão do Administrador!`);
+      renderTeacherDashboard();
+    }
+
+    /* ==================== ADMIN DASHBOARD ==================== */
+    function switchAdminTab(tab) {
+      appState.activeAdminTab = tab;
+      [`overview`, `request`, `drafts`, `tutors`].forEach(function (t) {
+        const btn = byId(`admin-tab-` + t);
+        const panel = byId(`admin-panel-` + t);
+        if (btn) btn.classList.toggle(`active`, tab === t);
+        if (panel) panel.classList.toggle(`hidden`, tab !== t);
+      });
+      renderAdminDashboard();
+    }
+
+    function renderAdminDashboard() {
+      const activeCourses = appState.classes.filter(function (c) { return c.status === `published`; });
+      const totalEnrolled = activeCourses.reduce(function (sum, c) { return sum + c.enrolledCount; }, 0);
+      const pendingDrafts = appState.drafts.filter(function (d) { return d.status === `pending_approval`; });
+      const pendingTutors = appState.tutors.filter(function (t) { return t.status === `pending`; });
+
+      if (byId(`admin-kpis`)) {
+        byId(`admin-kpis`).innerHTML = `
+          <div class="tile figure">
+            <div class="label">Cursos Ativos</div>
+            <div class="value">${activeCourses.length}</div>
+            <div class="caption">turmas publicadas no catálogo</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Alunos Matriculados</div>
+            <div class="value">${totalEnrolled}</div>
+            <div class="caption">vagas ocupadas no total</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Rascunhos Pendentes</div>
+            <div class="value">${pendingDrafts.length}</div>
+            <div class="caption">aguardando publicação</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Tutores em Análise</div>
+            <div class="value">${pendingTutors.length}</div>
+            <div class="caption">portfólios aguardando moderação</div>
+          </div>
+        `;
+      }
+
+      renderAdminOverview(activeCourses);
+      renderAdminRequestPanel();
+      renderAdminDraftsPanel(pendingDrafts);
+      renderAdminTutorsPanel();
+      refreshIcons();
+    }
+
+    function renderAdminOverview(activeCourses) {
+      const panel = byId(`admin-panel-overview`);
+      if (!panel) return;
+      panel.innerHTML = `
+        <div class="tile stack-md">
+          <div class="row-between">
+            <div>
+              <h3 class="tile-title">Visão Geral de Cursos Ativos</h3>
+              <p class="muted" style="margin:var(--space-xs) 0 0;font-size:0.875rem;">Cursos com turmas ativas vinculadas têm proteção contra exclusão para preservar a integridade das matrículas.</p>
+            </div>
+          </div>
+          <div id="admin-overview-msg"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Curso / Turma</th>
+                  <th>Professor</th>
+                  <th>Instrumento</th>
+                  <th>Nível</th>
+                  <th>Período</th>
+                  <th>Alunos Matriculados</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${activeCourses.map(function (c) {
+                  const tutor = getTutorById(c.tutorId);
+                  return `
+                    <tr>
+                      <td><strong>${escapeHtml(c.title)}</strong></td>
+                      <td>${escapeHtml(tutor ? tutor.name : `—`)}</td>
+                      <td><span class="chip chip-blue">${escapeHtml(c.instrument)}</span></td>
+                      <td>${escapeHtml(c.level)}</td>
+                      <td>${escapeHtml(c.period)}</td>
+                      <td><strong>${c.enrolledCount}</strong> / ${c.maxSpots} alunos</td>
+                      <td>
+                        <div class="row-wrap">
+                          <button type="button" class="btn btn-secondary btn-sm" onclick="adjustClassLimit('${c.id}')">+2 vagas</button>
+                          <button type="button" class="btn btn-danger btn-sm" onclick="attemptDeleteCourse('${c.id}')">Excluir</button>
+                        </div>
+                      </td>
+                    </tr>
+                  `;
+                }).join(``)}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function adjustClassLimit(classId) {
+      const c = getClassById(classId);
+      if (!c) return;
+      c.maxSpots += 2;
+      saveState();
+      showToast(`Limite da turma "${c.title}" ampliado para ${c.maxSpots} alunos com autorização administrativa.`);
+      renderAdminDashboard();
+    }
+
+    function attemptDeleteCourse(classId) {
+      const c = getClassById(classId);
+      const msg = byId(`admin-overview-msg`);
+      if (!c || !msg) return;
+      if (c.enrolledCount > 0) {
+        msg.innerHTML = `<div class="notice notice-danger"><span><strong>Exclusão bloqueada:</strong> "${escapeHtml(c.title)}" possui ${c.enrolledCount} alunos em turma ativa vinculada.</span></div>`;
+        return;
+      }
+      appState.classes = appState.classes.filter(function (x) { return x.id !== classId; });
+      saveState();
+      showToast(`Turma removida.`);
+      renderAdminDashboard();
+    }
+
+    function renderAdminRequestPanel() {
+      const panel = byId(`admin-panel-request`);
+      if (!panel) return;
+      const activeTutors = appState.tutors.filter(function (t) { return t.status === `active`; });
+
+      panel.innerHTML = `
+        <div class="two-col">
+          <div class="tile stack-md">
+            <h3 class="tile-title">Solicitar Novo Curso para Tutor Específico</h3>
+            <p class="muted" style="margin:0;font-size:0.875rem;">Envie uma solicitação direta para que o tutor elabore o rascunho da turma no painel dele.</p>
+            <form class="stack-md" onsubmit="sendAdminCourseRequest(event)">
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="req-tutor">Tutor destinatário</label>
+                  <select id="req-tutor">
+                    ${activeTutors.map(function (t) {
+                      return `<option value="${t.id}">${escapeHtml(t.name)} (${escapeHtml(t.instruments.join(`, `))})</option>`;
+                    }).join(``)}
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="req-instrument">Instrumento</label>
+                  <select id="req-instrument">
+                    <option value="Violão">Violão</option>
+                    <option value="Teclado">Teclado</option>
+                    <option value="Bateria">Bateria</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="req-level">Nível</label>
+                  <select id="req-level">
+                    <option value="Iniciante">Iniciante</option>
+                    <option value="Intermediário">Intermediário</option>
+                    <option value="Avançado">Avançado</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="req-period">Período sugerido</label>
+                  <select id="req-period">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noite">Noite</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="req-message">Diretrizes e objetivo do curso</label>
+                  <textarea id="req-message" placeholder="Descreva a ementa esperada, foco prático e perfil dos alunos..." required></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Enviar solicitação ao tutor</button>
+            </form>
+          </div>
+
+          <div class="tile stack-md">
+            <h3 class="tile-title">Solicitações Enviadas (${appState.adminRequests.length})</h3>
+            ${appState.adminRequests.map(function (r) {
+              const t = getTutorById(r.tutorId);
+              return `
+                <div class="tile-inset stack-xs">
+                  <div class="row-between">
+                    <strong>${escapeHtml(t ? t.name : ``)}</strong>
+                    <span class="chip ${r.status === `open` ? `chip-blue` : `chip-green`}">${r.status === `open` ? `Aguardando rascunho` : `Rascunho criado`}</span>
+                  </div>
+                  <span style="font-size:0.875rem;">${escapeHtml(r.instrument)} • ${escapeHtml(r.level)} • ${escapeHtml(r.period)}</span>
+                  <span class="muted" style="font-size:0.8125rem;">${escapeHtml(r.message)}</span>
+                </div>
+              `;
+            }).join(``)}
+          </div>
+        </div>
+      `;
+    }
+
+    function sendAdminCourseRequest(e) {
+      e.preventDefault();
+      const tutorId = byId(`req-tutor`) ? byId(`req-tutor`).value : ``;
+      const instrument = byId(`req-instrument`) ? byId(`req-instrument`).value : `Violão`;
+      const level = byId(`req-level`) ? byId(`req-level`).value : `Iniciante`;
+      const period = byId(`req-period`) ? byId(`req-period`).value : `Noite`;
+      const message = byId(`req-message`) ? byId(`req-message`).value.trim() : ``;
+      if (!tutorId || !message) return;
+
+      appState.adminRequests.unshift({
+        id: `req-` + Date.now(),
+        tutorId: tutorId,
+        instrument: instrument,
+        level: level,
+        period: period,
+        message: message,
+        createdAt: `22/11/2026`,
+        status: `open`
+      });
+      saveState();
+      const t = getTutorById(tutorId);
+      showToast(`Solicitação enviada para ${t ? t.name : `o tutor`}!`);
+      renderAdminDashboard();
+    }
+
+    function renderAdminDraftsPanel(pendingDrafts) {
+      const panel = byId(`admin-panel-drafts`);
+      if (!panel) return;
+      panel.innerHTML = `
+        <div class="stack-md">
+          <h3 class="tile-title">Rascunhos Enviados pelos Professores para Aprovação (${pendingDrafts.length})</h3>
+          ${pendingDrafts.length === 0 ? `<div class="tile"><p class="muted" style="margin:0;">Nenhum rascunho aguardando revisão no momento.</p></div>` : pendingDrafts.map(function (d) {
+            const tutor = getTutorById(d.tutorId);
+            return `
+              <div class="tile stack-md">
+                <div class="row-between">
+                  <div class="row-wrap">
+                    <span class="chip chip-blue">${escapeHtml(d.instrument)} • ${escapeHtml(d.level)}</span>
+                    <span class="chip chip-warning">Aguardando aprovação</span>
+                  </div>
+                  <span class="muted" style="font-size:0.875rem;">${escapeHtml(tutor ? tutor.name : ``)}</span>
+                </div>
+                <div>
+                  <h4 style="margin:0;font-family:var(--font-headline);font-size:1.25rem;">${escapeHtml(d.title)}</h4>
+                  <p class="muted" style="margin:var(--space-xs) 0 0;">${escapeHtml(d.summary)}</p>
+                  <p style="margin:var(--space-xs) 0 0;font-size:0.875rem;"><strong>Horário:</strong> ${escapeHtml(d.period)} (${escapeHtml(d.schedule)}) • <strong>Limite:</strong> ${d.maxSpots} alunos</p>
+                </div>
+                <div class="form-grid" style="align-items:end;">
+                  <div class="field">
+                    <label for="draft-feedback-${d.id}">Motivo (caso devolva para ajustes)</label>
+                    <input type="text" id="draft-feedback-${d.id}" placeholder="Ex.: Ajustar horário para o período da tarde">
+                  </div>
+                  <div class="row-wrap">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="approveDraft('${d.id}')">Aprovar e Publicar no Catálogo</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="returnDraft('${d.id}')">Devolver para Ajustes</button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join(``)}
+        </div>
+      `;
+    }
+
+    function approveDraft(draftId) {
+      const idx = appState.drafts.findIndex(function (d) { return d.id === draftId; });
+      if (idx === -1) return;
+      const d = appState.drafts[idx];
+      appState.drafts.splice(idx, 1);
+
+      const newClassId = `cls-` + Date.now();
+      appState.classes.unshift({
+        id: newClassId,
+        title: d.title,
+        instrument: d.instrument,
+        level: d.level,
+        period: d.period,
+        schedule: d.schedule,
+        nextLive: `Próxima semana`,
+        tutorId: d.tutorId,
+        maxSpots: d.maxSpots,
+        enrolledCount: 0,
+        status: `published`,
+        summary: d.summary
+      });
+      saveState();
+      showToast(`"${d.title}" aprovada e publicada no Catálogo de Cursos!`);
+      renderAdminDashboard();
+    }
+
+    function returnDraft(draftId) {
+      const d = appState.drafts.find(function (x) { return x.id === draftId; });
+      if (!d) return;
+      const fb = byId(`draft-feedback-` + draftId);
+      d.adminNote = (fb ? fb.value.trim() : ``) || `Revisar grade de horários antes da publicação.`;
+      d.status = `changes_requested`;
+      saveState();
+      showToast(`Rascunho devolvido ao tutor com observação.`);
+      renderAdminDashboard();
+    }
+
+    function renderAdminTutorsPanel() {
+      const panel = byId(`admin-panel-tutors`);
+      if (!panel) return;
+      const pending = appState.tutors.filter(function (t) { return t.status === `pending`; });
+      const reviewed = appState.tutors.filter(function (t) { return t.status !== `pending`; });
+
+      panel.innerHTML = `
+        <div class="stack-md">
+          <h3 class="tile-title">Candidaturas Pendentes de Validação (${pending.length})</h3>
+          ${pending.length === 0 ? `<div class="tile"><p class="muted" style="margin:0;">Nenhuma candidatura pendente de análise.</p></div>` : pending.map(function (t) {
+            return `
+              <div class="tile stack-md">
+                <div class="row-between">
+                  <div>
+                    <h4 style="margin:0;font-family:var(--font-headline);font-size:1.25rem;">${escapeHtml(t.name)}</h4>
+                    <span class="muted" style="font-size:0.875rem;">${escapeHtml(t.email)} • ${t.experienceYears} anos de experiência</span>
+                  </div>
+                  <div class="row-wrap">
+                    <span class="chip chip-blue">${escapeHtml(t.instruments.join(`, `))}</span>
+                    <span class="chip chip-warning">Pendente</span>
+                  </div>
+                </div>
+                <div class="tile-inset stack-xs">
+                  <div><strong>Formação:</strong> ${escapeHtml(t.education)}</div>
+                  <div><strong>Portfólio:</strong> ${escapeHtml(t.portfolio)}</div>
+                  <div><strong>Anexo enviado:</strong> ${escapeHtml(t.docsName)}</div>
+                </div>
+                <div class="form-grid" style="align-items:end;">
+                  <div class="field">
+                    <label for="tutor-reject-${t.id}">Motivo (obrigatório caso recuse)</label>
+                    <input type="text" id="tutor-reject-${t.id}" placeholder="Ex.: Portfólio sem vídeos práticos...">
+                  </div>
+                  <div class="row-wrap">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="moderateTutor('${t.id}', true)">Aprovar e Ativar Tutor</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="moderateTutor('${t.id}', false)">Recusar Candidatura</button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join(``)}
+        </div>
+
+        <div class="stack-md">
+          <h3 class="tile-title">Quadro de Tutores Avaliados (${reviewed.length})</h3>
+          <div class="tile">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Instrumentos</th>
+                    <th>Formação</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${reviewed.map(function (t) {
+                    const chip = t.status === `active`
+                      ? `<span class="chip chip-green">Ativo</span>`
+                      : `<span class="chip chip-danger">Recusado</span>`;
+                    return `
+                      <tr>
+                        <td><strong>${escapeHtml(t.name)}</strong><br><span class="muted" style="font-size:0.8125rem;">${escapeHtml(t.email)}</span></td>
+                        <td>${escapeHtml(t.instruments.join(`, `))}</td>
+                        <td>${escapeHtml(t.education)}</td>
+                        <td>${chip}</td>
+                      </tr>
+                    `;
+                  }).join(``)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function moderateTutor(tutorId, approve) {
+      const t = getTutorById(tutorId);
+      if (!t) return;
+      if (approve) {
+        t.status = `active`;
+        t.rejectReason = ``;
+        saveState();
+        showToast(`${t.name} aprovado(a) e ativado(a)! E-mail de confirmação enviado.`);
+        renderAdminDashboard();
+        return;
+      }
+      const reasonEl = byId(`tutor-reject-` + tutorId);
+      const reason = reasonEl ? reasonEl.value.trim() : ``;
+      if (!reason) {
+        showToast(`Informe o motivo da recusa antes de prosseguir.`);
+        return;
+      }
+      t.status = `rejected`;
+      t.rejectReason = reason;
+      saveState();
+      showToast(`Candidatura de ${t.name} recusada e notificada com o motivo.`);
+      renderAdminDashboard();
+    }
+
+    /* ==================== RESET DEMO ==================== */
+    function resetDemoState(btn) {
+      if (btn && btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Clique novamente para confirmar`;
+        setTimeout(function () {
+          if (btn) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `Restaurar dados iniciais`;
+          }
+        }, 4000);
+        return;
+      }
+      if (btn) {
+        btn.dataset.armed = `false`;
+        btn.textContent = `Restaurar dados iniciais`;
+      }
+      appState = buildDefaultState();
+      saveState();
+      navigateTo(`landing`);
+      showToast(`Plataforma restaurada ao estado inicial.`);
+    }
+
+    /* ==================== MASTER RENDER & BOOTSTRAP ==================== */
+    function renderAll() {
+      renderHeader();
+      if (appState.currentView === `landing`) renderLanding();
+      else if (appState.currentView === `catalog`) renderCatalog();
+      else if (appState.currentView === `auth`) renderAuthTabs();
+      else if (appState.currentView === `checkout`) renderCheckout();
+      else if (appState.currentView === `student`) renderStudentDashboard();
+      else if (appState.currentView === `classroom`) renderClassroom();
+      else if (appState.currentView === `teacher`) renderTeacherDashboard();
+      else if (appState.currentView === `admin`) renderAdminDashboard();
+      refreshIcons();
+    }
+
+    async function initApp() {
+      await loadState();
+      // Sync visible view containers with restored currentView
+      const views = [`landing`, `catalog`, `auth`, `checkout`, `student`, `classroom`, `teacher`, `admin`];
+      views.forEach(function (v) {
+        const el = byId(`view-` + v);
+        if (el) {
+          if (v === appState.currentView) el.classList.remove(`hidden`);
+          else el.classList.add(`hidden`);
+        }
+      });
+      renderAll();
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
